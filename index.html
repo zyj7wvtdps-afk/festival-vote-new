@@ -24,18 +24,13 @@
       color: #173d32;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
     header {
-      background:
-        linear-gradient(
-          135deg,
-          #0c352a 0%,
-          #14513d 55%,
-          #0b3026 100%
-        );
+      background: linear-gradient(
+        135deg,
+        #0c352a 0%,
+        #14513d 55%,
+        #0b3026 100%
+      );
       color: white;
       text-align: center;
       padding: 25px 15px 20px;
@@ -84,10 +79,6 @@
       opacity: .9;
     }
 
-    /* =========================
-       NAV
-    ========================= */
-
     nav {
       background: #fff;
       display: flex;
@@ -116,19 +107,11 @@
       color: white;
     }
 
-    /* =========================
-       MAIN
-    ========================= */
-
     main {
       max-width: 950px;
       margin: auto;
       padding: 22px 15px 60px;
     }
-
-    /* =========================
-       RACE BOARD
-    ========================= */
 
     .race-board {
       background: #fff;
@@ -197,10 +180,6 @@
       font-weight: 900;
     }
 
-    /* =========================
-       TRACK
-    ========================= */
-
     .track {
       margin: 18px 0;
       height: 95px;
@@ -239,7 +218,6 @@
       from {
         left: 7%;
       }
-
       to {
         left: 76%;
       }
@@ -251,18 +229,15 @@
       top: 0;
       bottom: 0;
       width: 6px;
-      background: repeating-linear-gradient(
-        45deg,
-        white 0,
-        white 8px,
-        #222 8px,
-        #222 16px
-      );
+      background:
+        repeating-linear-gradient(
+          45deg,
+          white 0,
+          white 8px,
+          #222 8px,
+          #222 16px
+        );
     }
-
-    /* =========================
-       ENTRY TABLE
-    ========================= */
 
     .section-title {
       background: #173d32;
@@ -281,11 +256,25 @@
       margin-bottom: 20px;
     }
 
+    /* 出走表 */
+    .entry-header {
+      display: grid;
+      grid-template-columns: 55px 1fr 90px 145px;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 14px;
+      background: #f1eee3;
+      color: #6b716d;
+      font-size: 11px;
+      font-weight: 900;
+      border-bottom: 1px solid #ddd9cb;
+    }
+
     .entry {
       display: grid;
-      grid-template-columns: 55px 1fr auto;
+      grid-template-columns: 55px 1fr 90px 145px;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       padding: 14px;
       border-bottom: 1px solid #e6e6e0;
     }
@@ -318,6 +307,21 @@
       margin-top: 3px;
     }
 
+    .win-rate {
+      font-size: 20px;
+      font-weight: 900;
+      color: #9a7920;
+      text-align: center;
+    }
+
+    .win-label {
+      display: block;
+      font-size: 9px;
+      color: #858982;
+      margin-bottom: 2px;
+      letter-spacing: 1px;
+    }
+
     .vote-button {
       background: #c9a64b;
       color: #173d32;
@@ -339,10 +343,6 @@
       cursor: not-allowed;
     }
 
-    /* =========================
-       NOTICE
-    ========================= */
-
     .notice {
       background: #fff;
       border-left: 5px solid #c9a64b;
@@ -352,10 +352,6 @@
       color: #626b66;
       margin-bottom: 20px;
     }
-
-    /* =========================
-       RANKING
-    ========================= */
 
     .ranking {
       display: none;
@@ -403,9 +399,11 @@
       margin-top: 3px;
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
+    .rank-rate {
+      font-size: 14px;
+      color: #777;
+      font-weight: bold;
+    }
 
     footer {
       background: #173d32;
@@ -420,27 +418,32 @@
       display: none !important;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 650px) {
+    @media (max-width: 700px) {
 
       .logo {
         font-size: 34px;
       }
 
-      .race-main h2 {
-        font-size: 21px;
+      .entry-header {
+        grid-template-columns: 45px 1fr 70px;
+      }
+
+      .entry-header div:last-child {
+        display: none;
       }
 
       .entry {
-        grid-template-columns: 48px 1fr;
+        grid-template-columns: 45px 1fr 70px;
+        gap: 8px;
       }
 
       .vote-button {
-        grid-column: 2;
+        grid-column: 1 / -1;
         width: 100%;
+      }
+
+      .win-rate {
+        font-size: 18px;
       }
 
       .horse-run {
@@ -455,10 +458,6 @@
 </head>
 
 <body>
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <header>
 
@@ -477,10 +476,6 @@
 </header>
 
 
-<!-- =========================
-     NAV
-========================= -->
-
 <nav>
 
   <button id="voteNav" class="active">
@@ -495,10 +490,6 @@
 
 
 <main>
-
-  <!-- =========================
-       VOTE VIEW
-  ========================= -->
 
   <section id="voteView">
 
@@ -539,8 +530,6 @@
     </div>
 
 
-    <!-- TRACK -->
-
     <div class="track">
 
       <div class="track-line"></div>
@@ -554,8 +543,6 @@
     </div>
 
 
-    <!-- NOTICE -->
-
     <div class="notice">
 
       <strong>📢 投票について</strong><br>
@@ -568,119 +555,180 @@
     </div>
 
 
-    <!-- ENTRY LIST -->
-
     <div class="section-title">
       🏇 出 走 表
     </div>
 
+
     <div class="entry-list">
 
+      <!-- 表の見出し -->
+
+      <div class="entry-header">
+        <div>馬番</div>
+        <div>参加者</div>
+        <div>勝率</div>
+        <div>投票</div>
+      </div>
+
+
+      <!-- 01 -->
+
       <div class="entry">
-        <div class="gate">01</div>
+
+        <div class="gate">
+          01
+        </div>
 
         <div>
           <div class="entry-name">
             エントリー 1
           </div>
+
           <div class="entry-description">
             No.01 / FESTIVAL ENTRY
           </div>
         </div>
 
+        <div class="win-rate">
+          <span class="win-label">
+            WIN RATE
+          </span>
+          34%
+        </div>
+
         <button class="vote-button">
           この参加者に投票
         </button>
+
       </div>
 
 
+      <!-- 02 -->
+
       <div class="entry">
-        <div class="gate">02</div>
+
+        <div class="gate">
+          02
+        </div>
 
         <div>
           <div class="entry-name">
             エントリー 2
           </div>
+
           <div class="entry-description">
             No.02 / FESTIVAL ENTRY
           </div>
         </div>
 
+        <div class="win-rate">
+          <span class="win-label">
+            WIN RATE
+          </span>
+          15%
+        </div>
+
         <button class="vote-button">
           この参加者に投票
         </button>
+
       </div>
 
 
+      <!-- 03 -->
+
       <div class="entry">
-        <div class="gate">03</div>
+
+        <div class="gate">
+          03
+        </div>
 
         <div>
           <div class="entry-name">
             エントリー 3
           </div>
+
           <div class="entry-description">
             No.03 / FESTIVAL ENTRY
           </div>
         </div>
 
+        <div class="win-rate">
+          <span class="win-label">
+            WIN RATE
+          </span>
+          21%
+        </div>
+
         <button class="vote-button">
           この参加者に投票
         </button>
+
       </div>
 
 
+      <!-- 04 -->
+
       <div class="entry">
-        <div class="gate">04</div>
+
+        <div class="gate">
+          04
+        </div>
 
         <div>
           <div class="entry-name">
             エントリー 4
           </div>
+
           <div class="entry-description">
             No.04 / FESTIVAL ENTRY
           </div>
         </div>
 
+        <div class="win-rate">
+          <span class="win-label">
+            WIN RATE
+          </span>
+          18%
+        </div>
+
         <button class="vote-button">
           この参加者に投票
         </button>
+
       </div>
 
 
+      <!-- 05 -->
+
       <div class="entry">
-        <div class="gate">05</div>
+
+        <div class="gate">
+          05
+        </div>
 
         <div>
           <div class="entry-name">
             エントリー 5
           </div>
+
           <div class="entry-description">
             No.05 / FESTIVAL ENTRY
           </div>
         </div>
 
-        <button class="vote-button">
-          この参加者に投票
-        </button>
-      </div>
-
-
-      <div class="entry">
-        <div class="gate">06</div>
-
-        <div>
-          <div class="entry-name">
-            エントリー 6
-          </div>
-          <div class="entry-description">
-            No.06 / FESTIVAL ENTRY
-          </div>
+        <div class="win-rate">
+          <span class="win-label">
+            WIN RATE
+          </span>
+          30%
         </div>
 
         <button class="vote-button">
           この参加者に投票
         </button>
+
       </div>
 
     </div>
@@ -689,7 +737,7 @@
 
 
   <!-- =========================
-       RANKING VIEW
+       RANKING
   ========================= -->
 
   <section id="rankingView" class="ranking">
@@ -744,33 +792,48 @@
 <script>
 
   /* =========================
-     CANDIDATES
+     5頭の固定データ
   ========================= */
 
-  const candidates = [
-    "エントリー 1",
-    "エントリー 2",
-    "エントリー 3",
-    "エントリー 4",
-    "エントリー 5",
-    "エントリー 6"
+  const horses = [
+    {
+      number: "01",
+      name: "エントリー 1",
+      rate: 34
+    },
+    {
+      number: "02",
+      name: "エントリー 2",
+      rate: 15
+    },
+    {
+      number: "03",
+      name: "エントリー 3",
+      rate: 21
+    },
+    {
+      number: "04",
+      name: "エントリー 4",
+      rate: 18
+    },
+    {
+      number: "05",
+      name: "エントリー 5",
+      rate: 30
+    }
   ];
 
 
   /* =========================
-     VOTE DATA
+     投票数
   ========================= */
 
   let votes = {};
 
-  candidates.forEach(name => {
-    votes[name] = 0;
+  horses.forEach(horse => {
+    votes[horse.name] = 0;
   });
 
-
-  /* =========================
-     ELEMENTS
-  ========================= */
 
   const voteNav =
     document.getElementById("voteNav");
@@ -789,7 +852,7 @@
 
 
   /* =========================
-     VIEW SWITCH
+     投票画面
   ========================= */
 
   function showVote() {
@@ -804,6 +867,10 @@
 
   }
 
+
+  /* =========================
+     ランキング画面
+  ========================= */
 
   function showRanking() {
 
@@ -821,19 +888,20 @@
 
 
   /* =========================
-     RANKING
+     ランキング表示
   ========================= */
 
   function renderRanking() {
 
     const sorted =
-      [...candidates].sort(
-        (a, b) => votes[b] - votes[a]
+      [...horses].sort(
+        (a, b) =>
+          votes[b.name] - votes[a.name]
       );
 
     rankingList.innerHTML = "";
 
-    sorted.forEach((name, index) => {
+    sorted.forEach((horse, index) => {
 
       const card =
         document.createElement("div");
@@ -853,14 +921,19 @@
         <div class="rank-info">
 
           <div class="rank-name">
-            ${name}
+            ${horse.name}
           </div>
 
           <div class="rank-votes">
-            ${votes[name]}票
+            ${votes[horse.name]}票
           </div>
 
         </div>
+
+        <div class="rank-rate">
+          勝率 ${horse.rate}%
+        </div>
+
       `;
 
       rankingList.appendChild(card);
@@ -871,7 +944,7 @@
 
 
   /* =========================
-     VOTING
+     投票
   ========================= */
 
   document
@@ -886,9 +959,11 @@
             button.closest(".entry");
 
           const name =
-            entry.querySelector(
-              ".entry-name"
-            ).textContent.trim();
+            entry
+              .querySelector(".entry-name")
+              .textContent
+              .trim();
+
 
           if (
             localStorage.getItem(
@@ -943,7 +1018,7 @@
 
 
   /* =========================
-     NAV EVENTS
+     NAV
   ========================= */
 
   voteNav.addEventListener(
@@ -956,10 +1031,6 @@
     showRanking
   );
 
-
-  /* =========================
-     INITIAL RENDER
-  ========================= */
 
   renderRanking();
 
