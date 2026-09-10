@@ -3,1226 +3,676 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>させ34‼️ | FESTIVAL RACE</title>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<title>SASE34 FESTIVAL RACE</title>
 
 <style>
-
-/* =========================
-   基本
-========================= */
-
 *{
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
-}
-
 body{
   margin:0;
-  background:#061d14;
-  color:#fff;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Helvetica Neue",
-    "Hiragino Kaku Gothic ProN",
-    "Yu Gothic",
-    Arial,
-    sans-serif;
+  font-family:Arial,"Noto Sans JP",sans-serif;
+  background:#071d12;
+  color:white;
 }
 
-button{
-  font-family:inherit;
-}
-
-
-/* =========================
-   ヘッダー
-========================= */
-
-.header{
-  background:
-    linear-gradient(180deg,#0b3926,#052519);
-  border-bottom:3px solid #d5b24c;
-  box-shadow:0 3px 15px #0008;
+header{
+  background:linear-gradient(#075b2d,#043d20);
+  border-bottom:4px solid #d4af37;
+  padding:14px 16px;
   position:sticky;
   top:0;
   z-index:100;
 }
 
 .header-inner{
-  max-width:1000px;
+  max-width:1100px;
   margin:auto;
-  padding:12px 16px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 }
 
 .logo{
   font-weight:900;
+  font-size:22px;
   letter-spacing:1px;
 }
 
-.logo-small{
-  font-size:10px;
-  color:#cdbb75;
-  letter-spacing:3px;
-}
-
-.logo-main{
-  font-size:22px;
-  color:#fff;
-}
-
-.live-badge{
-  background:#b90000;
-  color:white;
-  border-radius:5px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:900;
-  animation:blink 1.2s infinite;
-}
-
-@keyframes blink{
-  0%,100%{opacity:1}
-  50%{opacity:.5}
-}
-
-
-/* =========================
-   ナビ
-========================= */
-
-.nav{
-  max-width:1000px;
-  margin:auto;
-  display:flex;
-  border-top:1px solid #ffffff15;
-}
-
-.nav button{
-  flex:1;
-  padding:14px 5px;
-  background:#08291c;
-  color:#aaa;
-  border:0;
-  border-right:1px solid #ffffff12;
+.live{
+  background:#d71920;
+  padding:6px 11px;
+  border-radius:6px;
   font-weight:bold;
-  cursor:pointer;
+  font-size:13px;
 }
 
-.nav button.active{
-  color:#fff;
-  background:#12603c;
-  box-shadow:inset 0 -3px #e0bd52;
-}
-
-
-/* =========================
-   メイン
-========================= */
-
-.main{
-  max-width:1000px;
+.container{
+  max-width:1100px;
   margin:auto;
-  padding:15px;
+  padding:18px;
 }
 
-.page{
-  display:none;
+.hero{
+  text-align:center;
+  padding:20px 10px 15px;
 }
 
-.page.active{
-  display:block;
-}
-
-
-/* =========================
-   レースタイトル
-========================= */
-
-.race-header{
-  background:
-    linear-gradient(135deg,#174e32,#09291b);
-  border:1px solid #52745e;
-  border-radius:10px;
-  padding:16px;
-  margin-bottom:14px;
-  box-shadow:0 5px 18px #0005;
-}
-
-.race-number{
-  font-size:12px;
-  color:#d9bd64;
-  font-weight:bold;
+.hero h1{
+  margin:0;
+  font-size:32px;
+  color:#f3d76b;
   letter-spacing:2px;
 }
 
-.race-title{
-  font-size:26px;
-  font-weight:900;
-  margin:4px 0;
+.hero p{
+  margin:8px 0 0;
+  color:#d5e5da;
 }
 
-.race-info{
-  color:#b9c9c0;
+.status{
+  display:inline-block;
+  margin-top:12px;
+  background:#123e27;
+  border:1px solid #3c7654;
+  border-radius:20px;
+  padding:6px 14px;
+  font-size:13px;
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin:10px 0 18px;
+}
+
+.tab{
+  flex:1;
+  border:1px solid #397852;
+  background:#0c3320;
+  color:white;
+  padding:13px;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:#d4af37;
+  color:#102416;
+}
+
+.panel{
+  display:none;
+}
+
+.panel.active{
+  display:block;
+}
+
+/* RACE */
+
+.race-card{
+  background:#0b2d1a;
+  border:1px solid #397852;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,.3);
+}
+
+.race-top{
+  padding:14px;
+  background:#092619;
+  border-bottom:1px solid #397852;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.race-title{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.race-number{
+  background:#d4af37;
+  color:#102416;
+  padding:5px 9px;
+  border-radius:5px;
+  font-weight:bold;
   font-size:12px;
 }
 
-
-/* =========================
-   芝生コース
-========================= */
-
 .track{
-  position:relative;
-  height:230px;
-  overflow:hidden;
-  border-radius:12px;
-  border:4px solid #bd9d3c;
-
   background:
     repeating-linear-gradient(
       0deg,
-      #176c39 0px,
-      #176c39 16px,
-      #1b753e 16px,
-      #1b753e 32px
+      #23803d 0px,
+      #23803d 28px,
+      #1d7136 28px,
+      #1d7136 56px
     );
-
-  box-shadow:
-    inset 0 0 30px #001b0d99,
-    0 8px 20px #0007;
-
-  margin-bottom:18px;
-}
-
-.track::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  bottom:0;
-
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 65px,
-      #ffffff12 66px,
-      transparent 67px
-    );
-}
-
-.finish{
-  position:absolute;
-  right:40px;
-  top:0;
-  bottom:0;
-  width:7px;
-
-  background:
-    repeating-linear-gradient(
-      45deg,
-      #fff 0px,
-      #fff 10px,
-      #222 10px,
-      #222 20px
-    );
-
-  box-shadow:0 0 8px #0008;
-}
-
-.finish-label{
-  position:absolute;
-  right:22px;
-  top:8px;
-  font-size:10px;
-  background:#111;
-  padding:4px 6px;
-  border-radius:3px;
-  z-index:4;
+  padding:8px 0;
 }
 
 .lane{
+  height:58px;
   position:relative;
-  height:44px;
-  border-bottom:1px dashed #ffffff38;
+  border-bottom:2px dashed rgba(255,255,255,.45);
+  overflow:hidden;
 }
 
 .lane:last-child{
-  border-bottom:0;
+  border-bottom:none;
 }
 
 .lane-number{
   position:absolute;
-  left:7px;
-  top:7px;
-  width:28px;
-  height:28px;
-  border-radius:4px;
-
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
-  background:#f4f4f4;
+  left:8px;
+  top:13px;
+  width:31px;
+  height:31px;
+  background:white;
   color:#111;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-weight:900;
-  font-size:12px;
+  z-index:3;
+}
 
-  z-index:5;
+.finish{
+  position:absolute;
+  right:18px;
+  top:0;
+  width:10px;
+  height:100%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      white 0px,
+      white 8px,
+      #111 8px,
+      #111 16px
+    );
+  opacity:.9;
 }
 
 .horse{
   position:absolute;
-  left:-80px;
-  top:4px;
-  font-size:30px;
-
-  animation:
-    runHorse 7s linear infinite;
-
-  z-index:3;
-
-  filter:
-    drop-shadow(0 3px 2px #0008);
+  left:48px;
+  top:8px;
+  font-size:38px;
+  animation-name:run;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
 }
 
-.horse::after{
-  content:"";
-  position:absolute;
-  width:45px;
-  height:5px;
-  left:0;
-  top:29px;
-  background:#fff8;
-  filter:blur(3px);
+/* 馬本体だけ反転して右向き */
+.horse span{
+  display:block;
+  transform:scaleX(-1);
 }
 
-@keyframes runHorse{
+.horse1{animation-duration:4.8s;}
+.horse2{animation-duration:5.6s;animation-delay:-1.3s;}
+.horse3{animation-duration:5.1s;animation-delay:-2.2s;}
+.horse4{animation-duration:6.2s;animation-delay:-.8s;}
+.horse5{animation-duration:5.3s;animation-delay:-3s;}
+
+@keyframes run{
   0%{
-    left:-80px;
+    left:48px;
   }
-
   100%{
-    left:calc(100% - 65px);
+    left:calc(100% - 70px);
   }
 }
 
-.horse:nth-child(2){
-  animation-delay:.6s;
+.entry-list{
+  padding:15px;
 }
-
-.horse:nth-child(3){
-  animation-delay:1.2s;
-}
-
-.horse:nth-child(4){
-  animation-delay:1.8s;
-}
-
-.horse:nth-child(5){
-  animation-delay:2.4s;
-}
-
-
-/* =========================
-   LIVE表示
-========================= */
-
-.live-panel{
-  background:#071d14;
-  border:1px solid #315743;
-  border-radius:8px;
-  padding:10px 13px;
-  margin-bottom:15px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.live-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.red-dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#ef3131;
-  box-shadow:0 0 8px #ef3131;
-}
-
-.connection{
-  font-size:12px;
-  color:#8fd3ad;
-}
-
-
-/* =========================
-   エントリーカード
-========================= */
 
 .entry{
-  background:#fff;
-  color:#1a1a1a;
-  border-radius:12px;
-  overflow:hidden;
-  margin:13px 0;
-
-  box-shadow:
-    0 5px 15px #0006;
-
-  border:1px solid #d8d8d8;
-}
-
-.entry-head{
-  padding:13px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.entry-left{
+  background:#102f1d;
+  border:1px solid #315e43;
+  border-radius:10px;
+  margin-bottom:10px;
+  padding:13px;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
-.number-box{
-  width:42px;
-  height:42px;
+.entry:last-child{
+  margin-bottom:0;
+}
 
+.number{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#f4f4f4;
+  color:#111;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  border-radius:6px;
-
-  background:#111;
-  color:#e3c354;
-
-  font-size:16px;
   font-weight:900;
+  flex-shrink:0;
 }
 
-.entry-name{
-  font-size:18px;
-  font-weight:900;
-}
-
-.entry-sub{
-  font-size:11px;
-  color:#888;
-  margin-top:2px;
-}
-
-.rate{
-  text-align:right;
-}
-
-.rate-label{
-  font-size:10px;
-  color:#888;
-}
-
-.rate-value{
-  color:#08753d;
-  font-size:23px;
-  font-weight:900;
-}
-
-.vote-area{
-  padding:0 14px 14px;
-}
-
-.vote-button{
-  width:100%;
-  border:0;
-  border-radius:8px;
-
-  background:
-    linear-gradient(180deg,#16824b,#086c3b);
-
-  color:white;
-
-  padding:14px;
-  font-size:16px;
-  font-weight:900;
-
-  box-shadow:0 3px 0 #064a29;
-
-  cursor:pointer;
-
-  transition:.15s;
-}
-
-.vote-button:active{
-  transform:translateY(2px);
-  box-shadow:0 1px 0 #064a29;
-}
-
-.vote-button:disabled{
-  background:#999;
-  box-shadow:none;
-  cursor:not-allowed;
-}
-
-
-/* =========================
-   ランキング
-========================= */
-
-.ranking-header{
-  background:
-    linear-gradient(135deg,#b88b24,#e1c15b,#a67a19);
-
-  color:#172416;
-
-  border-radius:12px;
-  padding:20px;
-
-  margin-bottom:15px;
-
-  box-shadow:0 5px 18px #0007;
-}
-
-.ranking-header-small{
-  font-size:11px;
-  letter-spacing:2px;
-  font-weight:bold;
-}
-
-.ranking-header h1{
-  margin:3px 0 0;
-  font-size:28px;
-}
-
-.total-votes{
-  margin-top:6px;
-  font-size:13px;
-  font-weight:bold;
-}
-
-.rank-card{
-  background:#fff;
-  color:#222;
-
-  border-radius:12px;
-  margin:11px 0;
-  padding:14px;
-
-  display:flex;
-  align-items:center;
-  gap:13px;
-
-  box-shadow:0 4px 12px #0005;
-}
-
-.rank-position{
-  width:44px;
-  text-align:center;
-
-  font-size:22px;
-  font-weight:900;
-}
-
-.rank-card:nth-child(1) .rank-position{
-  color:#b58b22;
-}
-
-.rank-card:nth-child(2) .rank-position{
-  color:#777;
-}
-
-.rank-card:nth-child(3) .rank-position{
-  color:#9b673e;
-}
-
-.rank-main{
+.entry-info{
   flex:1;
 }
 
-.rank-name{
-  font-size:17px;
-  font-weight:900;
-}
-
-.rank-bar{
-  height:8px;
-  background:#e8e8e8;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:8px;
-}
-
-.rank-bar-fill{
-  height:100%;
-  background:#118049;
-  border-radius:20px;
-
-  transition:width .5s;
-}
-
-.rank-votes{
-  text-align:right;
-  min-width:55px;
-}
-
-.rank-votes-number{
-  font-size:20px;
-  font-weight:900;
-  color:#08753d;
-}
-
-.rank-votes-label{
-  font-size:9px;
-  color:#888;
-}
-
-
-/* =========================
-   注記
-========================= */
-
-.notice{
-  background:#fff8df;
-  color:#574a1e;
-
-  border-left:4px solid #d3ae42;
-
-  border-radius:6px;
-
-  padding:13px;
-
-  margin-top:18px;
-
-  font-size:12px;
-  line-height:1.7;
-}
-
-
-/* =========================
-   ローディング
-========================= */
-
-.loading{
-  text-align:center;
-  padding:30px;
-  color:#b9c9c0;
-}
-
-
-/* =========================
-   完了メッセージ
-========================= */
-
-.success{
-  display:none;
-
-  background:#dff7e9;
-  color:#17633d;
-
-  border:1px solid #a5dfbe;
-
-  padding:13px;
-  border-radius:8px;
-
-  margin-bottom:15px;
-
-  text-align:center;
-
+.entry-name{
+  font-size:16px;
   font-weight:bold;
 }
 
-.success.show{
-  display:block;
+.entry-sub{
+  font-size:12px;
+  color:#a9c6b3;
+  margin-top:3px;
 }
 
+.vote-button{
+  border:none;
+  background:#d4af37;
+  color:#111;
+  font-weight:900;
+  padding:10px 15px;
+  border-radius:8px;
+  cursor:pointer;
+}
 
-/* =========================
-   フッター
-========================= */
+.vote-button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
 
-.footer{
+.notice{
+  margin-top:15px;
+  padding:13px;
+  background:#102f1d;
+  border:1px solid #315e43;
+  border-radius:10px;
+  color:#c9ddd0;
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* RANKING */
+
+.ranking-card{
+  background:#0b2d1a;
+  border:1px solid #397852;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.ranking-head{
+  padding:17px;
+  background:#092619;
+  border-bottom:1px solid #397852;
+}
+
+.ranking-head h2{
+  margin:0;
+  color:#f3d76b;
+}
+
+.total{
+  margin-top:5px;
+  color:#bcd2c4;
+  font-size:13px;
+}
+
+.rank-row{
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid #214b31;
+}
+
+.rank-row:last-child{
+  border-bottom:none;
+}
+
+.rank{
+  width:38px;
+  font-size:22px;
+  font-weight:900;
   text-align:center;
-  color:#759181;
-  font-size:10px;
-  padding:35px 15px;
-  line-height:1.8;
 }
 
+.rank-name{
+  flex:1;
+}
 
-/* =========================
-   スマホ
-========================= */
+.rank-name strong{
+  font-size:16px;
+}
+
+.bar-wrap{
+  width:180px;
+  height:12px;
+  background:#173b25;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  background:#d4af37;
+  border-radius:20px;
+  transition:width .5s;
+}
+
+.count{
+  width:55px;
+  text-align:right;
+  font-weight:bold;
+}
+
+/* MOBILE */
 
 @media(max-width:600px){
-
-  .header-inner{
-    padding:10px 12px;
+  .hero h1{
+    font-size:24px;
   }
 
-  .logo-main{
-    font-size:18px;
+  .entry{
+    flex-wrap:wrap;
   }
 
-  .main{
-    padding:10px;
+  .vote-button{
+    width:100%;
   }
 
-  .race-title{
-    font-size:22px;
+  .bar-wrap{
+    width:100px;
   }
 
-  .track{
-    height:230px;
+  .rank-row{
+    gap:7px;
   }
-
-  .entry-name{
-    font-size:16px;
-  }
-
-  .rate-value{
-    font-size:20px;
-  }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================
-     HEADER
-========================= -->
-
-<header class="header">
-
+<header>
   <div class="header-inner">
-
-    <div class="logo">
-
-      <div class="logo-small">
-        SCHOOL FESTIVAL 2026
-      </div>
-
-      <div class="logo-main">
-        🐎 させ34‼️
-      </div>
-
-    </div>
-
-    <div class="live-badge">
-      ● LIVE
-    </div>
-
+    <div class="logo">🏇 SASE34 FESTIVAL</div>
+    <div class="live">● LIVE</div>
   </div>
-
-
-  <nav class="nav">
-
-    <button
-      id="navVote"
-      class="active"
-      onclick="showPage('vote')"
-    >
-      🗳️ 投票
-    </button>
-
-    <button
-      id="navRanking"
-      onclick="showPage('ranking')"
-    >
-      🏆 ランキング
-    </button>
-
-  </nav>
-
 </header>
 
+<div class="container">
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main class="main">
-
-
-<!-- =========================
-     投票画面
-========================= -->
-
-<section
-  id="votePage"
-  class="page active"
->
-
-  <div class="race-header">
-
-    <div class="race-number">
-      第34回 文化祭記念
+  <div class="hero">
+    <h1>SASE34 FESTIVAL RACE</h1>
+    <p>文化祭記念 人気投票</p>
+    <div class="status" id="status">
+      🔄 Firebase接続中...
     </div>
-
-    <div class="race-title">
-      SASE34 FESTIVAL RACE
-    </div>
-
-    <div class="race-info">
-      SCHOOL FESTIVAL SPECIAL EVENT
-    </div>
-
   </div>
 
-
-  <div class="live-panel">
-
-    <div class="live-left">
-
-      <div class="red-dot"></div>
-
-      <strong>LIVE 投票受付中</strong>
-
-    </div>
-
-    <div
-      id="connection"
-      class="connection"
-    >
-      接続中…
-    </div>
-
+  <div class="tabs">
+    <button class="tab active" onclick="showPanel('vote')">
+      🗳️ 投票
+    </button>
+    <button class="tab" onclick="showPanel('ranking')">
+      🏆 ランキング
+    </button>
   </div>
 
+  <!-- 投票画面 -->
+  <section id="vote" class="panel active">
 
-  <!-- 芝生コース -->
+    <div class="race-card">
 
-  <div class="track">
-
-    <div class="finish-label">
-      FINISH
-    </div>
-
-    <div class="finish"></div>
-
-
-    <div class="lane">
-
-      <div class="lane-number">
-        01
+      <div class="race-top">
+        <div class="race-title">
+          第34回 文化祭記念
+        </div>
+        <div class="race-number">
+          FREE VOTE
+        </div>
       </div>
 
-      <div class="horse">
-        🐎
+      <div class="track">
+
+        <div class="lane">
+          <div class="lane-number">1</div>
+          <div class="horse horse1"><span>🐎</span></div>
+          <div class="finish"></div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-number">2</div>
+          <div class="horse horse2"><span>🐎</span></div>
+          <div class="finish"></div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-number">3</div>
+          <div class="horse horse3"><span>🐎</span></div>
+          <div class="finish"></div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-number">4</div>
+          <div class="horse horse4"><span>🐎</span></div>
+          <div class="finish"></div>
+        </div>
+
+        <div class="lane">
+          <div class="lane-number">5</div>
+          <div class="horse horse5"><span>🐎</span></div>
+          <div class="finish"></div>
+        </div>
+
+      </div>
+
+      <div class="entry-list">
+
+        <div class="entry">
+          <div class="number">1</div>
+          <div class="entry-info">
+            <div class="entry-name">エントリー1</div>
+            <div class="entry-sub">No.01</div>
+          </div>
+          <button class="vote-button" onclick="vote('01')">
+            この人に投票
+          </button>
+        </div>
+
+        <div class="entry">
+          <div class="number">2</div>
+          <div class="entry-info">
+            <div class="entry-name">エントリー2</div>
+            <div class="entry-sub">No.02</div>
+          </div>
+          <button class="vote-button" onclick="vote('02')">
+            この人に投票
+          </button>
+        </div>
+
+        <div class="entry">
+          <div class="number">3</div>
+          <div class="entry-info">
+            <div class="entry-name">エントリー3</div>
+            <div class="entry-sub">No.03</div>
+          </div>
+          <button class="vote-button" onclick="vote('03')">
+            この人に投票
+          </button>
+        </div>
+
+        <div class="entry">
+          <div class="number">4</div>
+          <div class="entry-info">
+            <div class="entry-name">エントリー4</div>
+            <div class="entry-sub">No.04</div>
+          </div>
+          <button class="vote-button" onclick="vote('04')">
+            この人に投票
+          </button>
+        </div>
+
+        <div class="entry">
+          <div class="number">5</div>
+          <div class="entry-info">
+            <div class="entry-name">エントリー5</div>
+            <div class="entry-sub">No.05</div>
+          </div>
+          <button class="vote-button" onclick="vote('05')">
+            この人に投票
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="notice">
+      🎪 <strong>文化祭人気投票です</strong><br>
+      お金を使わない無料の投票です。1端末につき1票まで投票できます。
+    </div>
+
+  </section>
+
+
+  <!-- ランキング画面 -->
+  <section id="ranking" class="panel">
+
+    <div class="ranking-card">
+
+      <div class="ranking-head">
+        <h2>🏆 現在のランキング</h2>
+        <div class="total">
+          総投票数：<span id="totalVotes">0</span>票
+        </div>
+      </div>
+
+      <div id="rankingList">
+
+        <div class="rank-row">
+          <div class="rank">1</div>
+          <div class="rank-name"><strong>エントリー1</strong></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="count">0票</div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank">2</div>
+          <div class="rank-name"><strong>エントリー2</strong></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="count">0票</div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank">3</div>
+          <div class="rank-name"><strong>エントリー3</strong></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="count">0票</div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank">4</div>
+          <div class="rank-name"><strong>エントリー4</strong></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="count">0票</div>
+        </div>
+
+        <div class="rank-row">
+          <div class="rank">5</div>
+          <div class="rank-name"><strong>エントリー5</strong></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%"></div></div>
+          <div class="count">0票</div>
+        </div>
+
       </div>
 
     </div>
 
+  </section>
 
-    <div class="lane">
-
-      <div class="lane-number">
-        02
-      </div>
-
-      <div class="horse">
-        🐎
-      </div>
-
-    </div>
+</div>
 
 
-    <div class="lane">
-
-      <div class="lane-number">
-        03
-      </div>
-
-      <div class="horse">
-        🐎
-      </div>
-
-    </div>
-
-
-    <div class="lane">
-
-      <div class="lane-number">
-        04
-      </div>
-
-      <div class="horse">
-        🐎
-      </div>
-
-    </div>
-
-
-    <div class="lane">
-
-      <div class="lane-number">
-        05
-      </div>
-
-      <div class="horse">
-        🐎
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div
-    id="successMessage"
-    class="success"
-  >
-    🎉 投票ありがとうございました！
-  </div>
-
-
-  <div id="entries">
-
-    <div class="loading">
-      投票データを読み込んでいます…
-    </div>
-
-  </div>
-
-
-  <div class="notice">
-
-    <strong>📢 文化祭人気投票について</strong><br>
-
-    この企画は文化祭内で行う
-    <strong>無料の人気投票</strong>です。<br>
-
-    お金を賭けたり、賞金を受け取ったりするものではありません。
-
-  </div>
-
-</section>
-
-
-
-<!-- =========================
-     ランキング画面
-========================= -->
-
-<section
-  id="rankingPage"
-  class="page"
->
-
-  <div class="ranking-header">
-
-    <div class="ranking-header-small">
-      SASE34 FESTIVAL 2026
-    </div>
-
-    <h1>
-      🏆 人気ランキング
-    </h1>
-
-    <div
-      id="totalVotes"
-      class="total-votes"
-    >
-      現在の投票数：0票
-    </div>
-
-  </div>
-
-
-  <div id="rankingList">
-
-    <div class="loading">
-      ランキングを読み込んでいます…
-    </div>
-
-  </div>
-
-
-  <div class="notice">
-
-    📊 ランキングは投票データをもとに
-    リアルタイムで更新されます。
-
-  </div>
-
-</section>
-
-
-</main>
-
-
-
-<footer class="footer">
-
-  SASE34 FESTIVAL RACE<br>
-  SCHOOL FESTIVAL 2026<br>
-  FREE POPULARITY VOTE
-
-</footer>
-
-
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <script>
 
-/* ==========================================
-   Firebase設定
-========================================== */
-
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
-
-  authDomain:
-    "sase34-9cebc.firebaseapp.com",
-
-  projectId:
-    "sase34-9cebc",
-
-  storageBucket:
-    "sase34-9cebc.firebasestorage.app",
-
-  messagingSenderId:
-    "507211802803",
-
-  appId:
-    "1:507211802803:web:d804fef0ed4aeded9ba8c6"
-
+  apiKey: "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
+  authDomain: "sase34-9cebc.firebaseapp.com",
+  projectId: "sase34-9cebc",
+  storageBucket: "sase34-9cebc.firebasestorage.app",
+  messagingSenderId: "507211802803",
+  appId: "1:507211802803:web:d804fef0ed4aeded9ba8c6"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
-
 const auth = firebase.auth();
-
 const db = firebase.firestore();
 
+/*
+  NEW VOTE COLLECTION
+  ↓
+  races / festival2026 / votes_v2
 
-/* ==========================================
-   エントリー
-========================================== */
+  以前の votes は使用しないため、
+  このサイトでは投票数が0からスタートします。
+*/
 
-const horses = [
-
-  {
-    id:"01",
-    name:"エントリー1",
-    rate:34
-  },
-
-  {
-    id:"02",
-    name:"エントリー2",
-    rate:15
-  },
-
-  {
-    id:"03",
-    name:"エントリー3",
-    rate:21
-  },
-
-  {
-    id:"04",
-    name:"エントリー4",
-    rate:18
-  },
-
-  {
-    id:"05",
-    name:"エントリー5",
-    rate:30
-  }
-
-];
-
+const raceRef = db.collection("races").doc("festival2026");
+const votesRef = raceRef.collection("votes_v2");
 
 let currentUser = null;
 
-let voteCounts = {};
+const names = {
+  "01":"エントリー1",
+  "02":"エントリー2",
+  "03":"エントリー3",
+  "04":"エントリー4",
+  "05":"エントリー5"
+};
 
 
-/* ==========================================
-   画面切り替え
-========================================== */
-
-function showPage(page){
-
-  const votePage =
-    document.getElementById("votePage");
-
-  const rankingPage =
-    document.getElementById("rankingPage");
-
-  const navVote =
-    document.getElementById("navVote");
-
-  const navRanking =
-    document.getElementById("navRanking");
-
-
-  if(page === "vote"){
-
-    votePage.classList.add("active");
-
-    rankingPage.classList.remove("active");
-
-    navVote.classList.add("active");
-
-    navRanking.classList.remove("active");
-
-  }
-
-  else{
-
-    votePage.classList.remove("active");
-
-    rankingPage.classList.add("active");
-
-    navVote.classList.remove("active");
-
-    navRanking.classList.add("active");
-
-  }
-
-}
-
-
-/* ==========================================
-   投票画面生成
-========================================== */
-
-function renderEntries(){
-
-  const container =
-    document.getElementById("entries");
-
-
-  container.innerHTML =
-    horses.map(horse => `
-
-      <div class="entry">
-
-        <div class="entry-head">
-
-          <div class="entry-left">
-
-            <div class="number-box">
-              ${horse.id}
-            </div>
-
-            <div>
-
-              <div class="entry-name">
-                ${horse.name}
-              </div>
-
-              <div class="entry-sub">
-                FESTIVAL ENTRY
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="rate">
-
-            <div class="rate-label">
-              FIXED DISPLAY
-            </div>
-
-            <div class="rate-value">
-              ${horse.rate}%
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="vote-area">
-
-          <button
-            class="vote-button"
-            id="button-${horse.id}"
-            onclick="vote('${horse.id}')"
-          >
-            🗳️ このエントリーに投票
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
-
-}
-
-
-/* ==========================================
-   匿名ログイン
-========================================== */
+/* Firebase接続 */
 
 auth.signInAnonymously()
+.then(function(result){
 
-.then(userCredential => {
+  currentUser = result.user;
 
-  currentUser =
-    userCredential.user;
+  document.getElementById("status").textContent =
+    "🟢 Firebase ONLINE";
 
-
-  document.getElementById(
-    "connection"
-  ).textContent =
-    "🟢 ONLINE";
-
-
-  checkMyVote();
-
-  loadVotes();
+  listenVotes();
 
 })
-
-
-.catch(error => {
+.catch(function(error){
 
   console.error(error);
 
-
-  document.getElementById(
-    "connection"
-  ).textContent =
-    "🔴 OFFLINE";
-
+  document.getElementById("status").textContent =
+    "🔴 Firebase接続エラー";
 
   alert(
-    "Firebaseへの接続に失敗しました。\n\n"
+    "Firebaseに接続できませんでした。\n\n"
     + error.code
     + "\n"
     + error.message
@@ -1231,145 +681,45 @@ auth.signInAnonymously()
 });
 
 
-/* ==========================================
-   自分の投票確認
-========================================== */
-
-async function checkMyVote(){
-
-  if(!currentUser) return;
-
-
-  try{
-
-    const ref =
-      db
-      .collection("races")
-      .doc("festival2026")
-      .collection("votes")
-      .doc(currentUser.uid);
-
-
-    const snapshot =
-      await ref.get();
-
-
-    if(snapshot.exists){
-
-      disableVoteButtons();
-
-
-      document.getElementById(
-        "successMessage"
-      ).classList.add("show");
-
-    }
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-  }
-
-}
-
-
-/* ==========================================
-   投票
-========================================== */
+/* 投票 */
 
 async function vote(horseId){
 
   if(!currentUser){
 
-    alert(
-      "まだFirebaseに接続していません。\n少し待ってからもう一度押してください。"
-    );
+    alert("Firebaseにまだ接続していません。\n少し待ってからもう一度押してください。");
 
     return;
-
   }
 
-
-  const button =
-    document.getElementById(
-      "button-" + horseId
-    );
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "投票中…";
-
+  const voteRef = votesRef.doc(currentUser.uid);
 
   try{
 
-    const voteRef =
-      db
-      .collection("races")
-      .doc("festival2026")
-      .collection("votes")
-      .doc(currentUser.uid);
-
-
-    const existing =
-      await voteRef.get();
-
+    const existing = await voteRef.get();
 
     if(existing.exists){
 
-      disableVoteButtons();
-
-      alert(
-        "このアカウントではすでに投票済みです。"
-      );
+      alert("この端末では、すでに投票済みです！");
 
       return;
-
     }
 
-
     await voteRef.set({
-
-      horseId:horseId,
-
-      createdAt:
-        firebase.firestore.FieldValue.serverTimestamp()
-
+      horseId: horseId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-
-    disableVoteButtons();
-
-
-    document.getElementById(
-      "successMessage"
-    ).classList.add("show");
-
-
-    document.getElementById(
-      "connection"
-    ).textContent =
-      "🟢 投票完了";
-
-
-    await loadVotes();
+    alert(
+      "投票ありがとうございました！🎉\n\n"
+      + names[horseId]
+      + " に投票しました。"
+    );
 
   }
-
   catch(error){
 
     console.error(error);
-
-
-    button.disabled = false;
-
-    button.textContent =
-      "🗳️ このエントリーに投票";
-
 
     alert(
       "投票に失敗しました。\n\n"
@@ -1383,287 +733,132 @@ async function vote(horseId){
 }
 
 
-/* ==========================================
-   投票ボタン無効化
-========================================== */
+/* リアルタイムランキング */
 
-function disableVoteButtons(){
+function listenVotes(){
 
-  document
-    .querySelectorAll(".vote-button")
-    .forEach(button => {
+  votesRef.onSnapshot(
+    function(snapshot){
 
-      button.disabled = true;
+      const counts = {
+        "01":0,
+        "02":0,
+        "03":0,
+        "04":0,
+        "05":0
+      };
 
-      button.textContent =
-        "✓ 投票済み";
+      snapshot.forEach(function(doc){
 
-    });
+        const data = doc.data();
 
-}
-
-
-/* ==========================================
-   投票データ取得
-========================================== */
-
-async function loadVotes(){
-
-  try{
-
-    const snapshot =
-      await db
-      .collection("races")
-      .doc("festival2026")
-      .collection("votes")
-      .get();
-
-
-    voteCounts = {};
-
-
-    horses.forEach(horse => {
-
-      voteCounts[horse.id] = 0;
-
-    });
-
-
-    snapshot.forEach(doc => {
-
-      const data =
-        doc.data();
-
-
-      if(
-        data.horseId &&
-        voteCounts[data.horseId] !== undefined
-      ){
-
-        voteCounts[data.horseId]++;
-
-      }
-
-    });
-
-
-    renderRanking();
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    document.getElementById(
-      "rankingList"
-    ).innerHTML = `
-
-      <div class="loading">
-        ランキングを読み込めませんでした。
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* ==========================================
-   ランキング表示
-========================================== */
-
-function renderRanking(){
-
-  const ranking =
-    [...horses].sort(
-
-      (a,b) =>
-        (voteCounts[b.id] || 0)
-        -
-        (voteCounts[a.id] || 0)
-
-    );
-
-
-  const total =
-    Object.values(voteCounts)
-      .reduce(
-        (sum,value) =>
-          sum + value,
-        0
-      );
-
-
-  document.getElementById(
-    "totalVotes"
-  ).textContent =
-    "現在の投票数：" + total + "票";
-
-
-  if(total === 0){
-
-    document.getElementById(
-      "rankingList"
-    ).innerHTML = `
-
-      <div class="loading">
-        まだ投票はありません。
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "rankingList"
-  ).innerHTML =
-
-    ranking.map((horse,index) => {
-
-      const votes =
-        voteCounts[horse.id] || 0;
-
-
-      const percent =
-        total === 0
-          ? 0
-          : Math.round(
-              votes / total * 100
-            );
-
-
-      let medal = "";
-
-      if(index === 0) medal = "🥇";
-
-      else if(index === 1) medal = "🥈";
-
-      else if(index === 2) medal = "🥉";
-
-      else medal = (index + 1) + "位";
-
-
-      return `
-
-        <div class="rank-card">
-
-          <div class="rank-position">
-            ${medal}
-          </div>
-
-
-          <div class="rank-main">
-
-            <div class="rank-name">
-              ${horse.name}
-            </div>
-
-            <div class="rank-bar">
-
-              <div
-                class="rank-bar-fill"
-                style="width:${percent}%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <div class="rank-votes">
-
-            <div class="rank-votes-number">
-              ${votes}
-            </div>
-
-            <div class="rank-votes-label">
-              票
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* ==========================================
-   リアルタイム更新
-========================================== */
-
-function startRealtime(){
-
-  db
-  .collection("races")
-  .doc("festival2026")
-  .collection("votes")
-
-  .onSnapshot(
-
-    snapshot => {
-
-      voteCounts = {};
-
-
-      horses.forEach(horse => {
-
-        voteCounts[horse.id] = 0;
-
-      });
-
-
-      snapshot.forEach(doc => {
-
-        const data =
-          doc.data();
-
-
-        if(
-          data.horseId &&
-          voteCounts[data.horseId] !== undefined
-        ){
-
-          voteCounts[data.horseId]++;
-
+        if(data.horseId && counts[data.horseId] !== undefined){
+          counts[data.horseId]++;
         }
 
       });
 
-
-      renderRanking();
+      updateRanking(counts);
 
     },
+    function(error){
 
-    error => {
+      console.error(error);
 
-      console.error(
-        "Realtime error:",
-        error
-      );
+      document.getElementById("status").textContent =
+        "🔴 Firestoreエラー";
 
     }
-
   );
 
 }
 
 
-/* ==========================================
-   起動
-========================================== */
+/* ランキング表示 */
 
-renderEntries();
+function updateRanking(counts){
 
-startRealtime();
+  const arr = Object.keys(counts).map(function(id){
+
+    return {
+      id:id,
+      name:names[id],
+      count:counts[id]
+    };
+
+  });
+
+  arr.sort(function(a,b){
+    return b.count - a.count;
+  });
+
+  const total = arr.reduce(function(sum,item){
+    return sum + item.count;
+  },0);
+
+  document.getElementById("totalVotes").textContent = total;
+
+  const rankingList = document.getElementById("rankingList");
+
+  rankingList.innerHTML = "";
+
+  arr.forEach(function(item,index){
+
+    const percent =
+      total === 0
+      ? 0
+      : Math.round(item.count / total * 100);
+
+    const row = document.createElement("div");
+
+    row.className = "rank-row";
+
+    row.innerHTML = `
+      <div class="rank">${index + 1}</div>
+
+      <div class="rank-name">
+        <strong>${item.name}</strong>
+      </div>
+
+      <div class="bar-wrap">
+        <div class="bar" style="width:${percent}%"></div>
+      </div>
+
+      <div class="count">
+        ${item.count}票
+      </div>
+    `;
+
+    rankingList.appendChild(row);
+
+  });
+
+}
+
+
+/* タブ切り替え */
+
+function showPanel(panelName){
+
+  document.querySelectorAll(".panel").forEach(function(panel){
+    panel.classList.remove("active");
+  });
+
+  document.querySelectorAll(".tab").forEach(function(tab){
+    tab.classList.remove("active");
+  });
+
+  document.getElementById(panelName).classList.add("active");
+
+  if(panelName === "vote"){
+    document.querySelectorAll(".tab")[0].classList.add("active");
+  }
+
+  if(panelName === "ranking"){
+    document.querySelectorAll(".tab")[1].classList.add("active");
+  }
+
+}
 
 </script>
 
