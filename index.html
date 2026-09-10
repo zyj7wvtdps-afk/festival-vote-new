@@ -2,582 +2,532 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DOKKYO RACE</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <style>
 *{
   box-sizing:border-box;
-  margin:0;
-  padding:0;
 }
 
 body{
-  font-family:Arial,"Noto Sans JP",sans-serif;
+  margin:0;
   background:
-    radial-gradient(circle at top,#26344d 0,#090d15 45%,#030508 100%);
-  color:#fff;
-  min-height:100vh;
+    radial-gradient(circle at top,#173d2b 0,#07150e 45%,#020604 100%);
+  color:white;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    Meiryo,
+    sans-serif;
 }
 
 header{
-  background:linear-gradient(180deg,#111827,#05070b);
-  border-bottom:2px solid #d9ad42;
-  padding:14px 15px;
-  text-align:center;
+  background:linear-gradient(180deg,#071b10,#020805);
+  border-bottom:2px solid #d4af37;
+  padding:15px 18px;
   position:sticky;
   top:0;
-  z-index:100;
-  box-shadow:0 4px 20px #000;
+  z-index:20;
+  box-shadow:0 4px 20px #0008;
+}
+
+.head{
+  max-width:1050px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .logo{
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:4px;
-  color:#f6d675;
-  text-shadow:0 0 12px #f6d675;
-}
-
-.subtitle{
-  font-size:11px;
-  color:#b9c0cb;
+  font-size:27px;
+  font-weight:1000;
   letter-spacing:2px;
-  margin-top:3px;
+  color:#f4d56b;
+  text-shadow:0 2px 8px #000;
 }
 
 .live{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  margin-top:8px;
-  padding:5px 12px;
-  border-radius:20px;
-  background:#210b0b;
-  border:1px solid #ff4040;
-  color:#ff5757;
-  font-weight:bold;
+  background:#d40000;
+  padding:7px 12px;
+  border-radius:6px;
   font-size:12px;
+  font-weight:1000;
+  box-shadow:0 0 12px #ff000088;
+  animation:liveBlink 1s infinite;
 }
 
-.live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#ff3030;
-  box-shadow:0 0 10px #ff3030;
-  animation:blink 1s infinite;
+@keyframes liveBlink{
+  0%,45%{opacity:1}
+  50%,100%{opacity:.35}
 }
 
-@keyframes blink{
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.25;transform:scale(.7)}
+.wrap{
+  max-width:1050px;
+  margin:auto;
+  padding:18px;
+}
+
+.hero{
+  background:
+    linear-gradient(135deg,#0c4d30,#092719 55%,#351f05);
+  border:1px solid #d4af37;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:
+    0 8px 30px #0008,
+    inset 0 0 30px #ffffff08;
+  margin-bottom:16px;
+}
+
+.mini{
+  color:#e4c45b;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.hero h1{
+  margin:5px 0;
+  font-size:38px;
+  letter-spacing:3px;
+  color:#fff5c2;
+}
+
+.hero p{
+  margin:5px 0 0;
+  color:#d5eadc;
+  font-weight:700;
 }
 
 nav{
-  display:flex;
-  gap:7px;
-  padding:10px;
-  background:#080b11;
-  border-bottom:1px solid #273040;
-  position:sticky;
-  top:94px;
-  z-index:90;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:16px;
 }
 
-.nav-btn{
-  flex:1;
-  border:1px solid #394253;
-  background:#151b25;
-  color:#bfc6d2;
-  border-radius:9px;
-  padding:12px 5px;
-  font-weight:900;
-  font-size:13px;
+.navbtn{
+  border:1px solid #b99125;
+  background:linear-gradient(#173c28,#092116);
+  color:#e8d06b;
+  padding:13px;
+  border-radius:10px;
+  font-weight:1000;
   cursor:pointer;
+  font-size:15px;
 }
 
-.nav-btn.active{
-  background:linear-gradient(180deg,#d6ad45,#8f6518);
-  color:#fff;
-  border-color:#f3d46c;
-  box-shadow:0 0 15px rgba(240,196,80,.35);
+.navbtn.active{
+  background:linear-gradient(#d4af37,#8d6714);
+  color:#07130b;
+  box-shadow:0 0 15px #d4af3766;
 }
 
 .page{
   display:none;
-  max-width:1000px;
-  margin:auto;
-  padding:18px 12px 50px;
 }
 
 .page.active{
   display:block;
 }
 
-.section-title{
-  text-align:center;
-  font-size:24px;
-  font-weight:900;
-  color:#f4d36c;
-  margin:8px 0 5px;
-  text-shadow:0 0 10px rgba(244,211,108,.3);
-}
-
-.section-sub{
-  text-align:center;
-  color:#8f99aa;
-  font-size:12px;
-  margin-bottom:18px;
-}
-
-.race-board{
-  background:linear-gradient(180deg,#151c28,#080b10);
-  border:1px solid #384456;
+.card{
+  background:linear-gradient(180deg,#10281b,#08170e);
+  border:1px solid #456b51;
   border-radius:16px;
   overflow:hidden;
-  box-shadow:0 15px 45px rgba(0,0,0,.55);
+  margin:14px 0;
+  box-shadow:0 6px 25px #0007;
 }
 
-.race-top{
-  padding:13px 15px;
+.bar{
+  background:linear-gradient(90deg,#193d29,#0b2115);
+  border-bottom:1px solid #456b51;
+  padding:12px 15px;
+  font-weight:1000;
+  color:#f0d66d;
+  letter-spacing:1px;
+}
+
+.raceinfo{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:linear-gradient(90deg,#171e2b,#0b0e14);
-  border-bottom:1px solid #303a4a;
+  gap:7px;
+  flex-wrap:wrap;
+  padding:12px 15px;
 }
 
-.race-title{
+.tag{
+  background:#173b27;
+  border:1px solid #42664e;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:12px;
   font-weight:900;
-  color:#f5d56e;
-  letter-spacing:2px;
 }
 
-.race-status{
-  font-size:11px;
-  color:#ff5c5c;
-  font-weight:bold;
-}
-
-.track-wrap{
-  padding:25px 10px 28px;
-  background:
-    linear-gradient(180deg,#07110a,#0b160c);
-}
+/* =========================
+   RACE
+========================= */
 
 .track{
   position:relative;
   height:390px;
-  border-radius:14px;
   overflow:hidden;
   background:
     repeating-linear-gradient(
       0deg,
-      #21441e 0px,
-      #21441e 16px,
-      #1c3d19 16px,
-      #1c3d19 32px
+      #176335 0px,
+      #176335 42px,
+      #13572e 42px,
+      #13572e 84px
     );
-  border:4px solid #d4d6d2;
-  box-shadow:inset 0 0 35px #000;
+  border-top:3px solid #d4af37;
+  border-bottom:3px solid #d4af37;
+}
+
+.track:before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 80px,
+      #ffffff10 80px,
+      #ffffff10 82px
+    );
+}
+
+.startline,
+.finishline{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:7px;
+  z-index:2;
+  background:repeating-linear-gradient(
+    180deg,
+    white 0 12px,
+    #111 12px 24px
+  );
+}
+
+.startline{
+  left:35px;
+}
+
+.finishline{
+  right:35px;
+}
+
+.finishlabel{
+  position:absolute;
+  right:4px;
+  top:7px;
+  z-index:5;
+  background:#111c;
+  color:#fff;
+  padding:4px 7px;
+  font-size:10px;
+  font-weight:1000;
 }
 
 .lane{
-  position:absolute;
-  left:0;
-  width:100%;
-  height:20%;
-  border-bottom:2px dashed rgba(255,255,255,.35);
-}
-
-.lane:nth-child(1){top:0}
-.lane:nth-child(2){top:20%}
-.lane:nth-child(3){top:40%}
-.lane:nth-child(4){top:60%}
-.lane:nth-child(5){top:80%}
-
-.start-line{
-  position:absolute;
-  left:10px;
-  top:0;
-  height:100%;
-  width:8px;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      #fff 0px,
-      #fff 18px,
-      #111 18px,
-      #111 36px
-    );
-  z-index:5;
-}
-
-.finish-line{
-  position:absolute;
-  right:25px;
-  top:0;
-  height:100%;
-  width:13px;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      #fff 0px,
-      #fff 18px,
-      #111 18px,
-      #111 36px
-    );
-  box-shadow:0 0 15px rgba(255,255,255,.5);
-  z-index:5;
-}
-
-.finish-label{
-  position:absolute;
-  right:2px;
-  top:8px;
-  transform:rotate(90deg);
-  transform-origin:right top;
-  color:#fff;
-  font-weight:900;
-  font-size:10px;
-  z-index:8;
-}
-
-.racer{
-  position:absolute;
-  left:-80px;
-  width:75px;
-  height:20%;
-  display:flex;
-  align-items:center;
-  z-index:10;
-
-  /* ゴールで止まらず、そのまま次の周回へ */
-  animation:runStraight 7s linear infinite;
-}
-
-.racer-inner{
   position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  height:20%;
+  border-bottom:1px dashed #ffffff30;
 }
 
-.horse{
+.lane:last-child{
+  border-bottom:0;
+}
+
+.horse-run{
+  position:absolute;
+  left:-90px;
+  top:50%;
+  transform:translateY(-50%);
   font-size:43px;
-  line-height:1;
-  filter:drop-shadow(2px 4px 3px rgba(0,0,0,.7));
+  z-index:4;
+  filter:drop-shadow(3px 5px 3px #0009);
+  animation-name:raceRun;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+  animation-fill-mode:both;
+  will-change:left;
+}
+
+.horse-run span{
+  display:block;
   transform:scaleX(-1);
 }
 
-.horse-label{
-  white-space:nowrap;
-  background:#101722;
-  border:1px solid #d8ae45;
-  border-radius:5px;
-  padding:2px 5px;
-  margin-top:2px;
-  font-size:9px;
-  font-weight:bold;
-  color:#fff;
+/*
+  5頭それぞれ速度を変更。
+  「下から順番にゴール」にならず、
+  バラバラに走るように設定。
+*/
+.h1{
+  animation-duration:6.8s;
+  animation-delay:-4.1s;
 }
 
-/* 途中で停止する区間を完全に削除 */
-@keyframes runStraight{
+.h2{
+  animation-duration:8.3s;
+  animation-delay:-6.2s;
+}
+
+.h3{
+  animation-duration:7.4s;
+  animation-delay:-1.7s;
+}
+
+.h4{
+  animation-duration:9.1s;
+  animation-delay:-7.4s;
+}
+
+.h5{
+  animation-duration:6.3s;
+  animation-delay:-3.0s;
+}
+
+@keyframes raceRun{
   0%{
-    left:-80px;
+    left:-90px;
   }
 
   100%{
-    left:calc(100% - 95px);
+    left:calc(100% - 90px);
   }
 }
 
-.racer.r1{top:0;animation-delay:0s}
-.racer.r2{top:20%;animation-delay:-1.2s}
-.racer.r3{top:40%;animation-delay:-2.4s}
-.racer.r4{top:60%;animation-delay:-3.6s}
-.racer.r5{top:80%;animation-delay:-4.8s}
-
-.horse-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:12px;
-  margin-top:18px;
-}
-
-.horse-card{
-  background:linear-gradient(180deg,#171e29,#0b0e14);
-  border:1px solid #364152;
-  border-radius:13px;
-  overflow:hidden;
-  box-shadow:0 8px 22px rgba(0,0,0,.4);
-}
-
-.horse-photo{
-  height:125px;
-  background:
-    radial-gradient(circle at 70% 30%,rgba(255,255,255,.12),transparent 25%),
-    linear-gradient(135deg,#35434c,#111820);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.horse-photo::before{
-  content:"🐎";
-  font-size:85px;
-  filter:drop-shadow(0 8px 5px #000);
-  transform:scaleX(-1);
-}
-
-.horse-number{
+.horse-label{
   position:absolute;
-  left:8px;
-  top:8px;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background:#111;
-  border:2px solid #f1c95c;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:900;
-  color:#f7d774;
+  left:13px;
+  top:5px;
+  background:#07150dcc;
+  border:1px solid #d4af37;
+  border-radius:5px;
+  padding:3px 6px;
+  font-size:10px;
+  font-weight:1000;
+  z-index:6;
 }
 
-.horse-info{
+/* =========================
+   VOTE
+========================= */
+
+.vote-list{
+  display:grid;
+  gap:10px;
   padding:12px;
 }
 
-.horse-name{
-  font-weight:900;
-  font-size:15px;
-}
-
-.horse-desc{
-  color:#8993a3;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.vote-grid{
-  display:grid;
-  gap:12px;
-}
-
 .vote-card{
-  background:linear-gradient(90deg,#151c27,#0b0e14);
-  border:1px solid #374354;
-  border-radius:13px;
-  padding:13px;
-  display:flex;
+  display:grid;
+  grid-template-columns:48px 1fr 85px 105px;
   align-items:center;
-  gap:12px;
+  gap:10px;
+  background:linear-gradient(90deg,#102b1b,#08180f);
+  border:1px solid #31553e;
+  border-radius:12px;
+  padding:12px;
+  transition:.2s;
 }
 
-.vote-num{
-  width:42px;
-  height:42px;
-  flex-shrink:0;
-  border-radius:10px;
-  background:linear-gradient(180deg,#d9b44e,#866019);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:19px;
-  font-weight:900;
+.vote-card:hover{
+  border-color:#d4af37;
+  box-shadow:0 0 15px #d4af3730;
 }
 
-.vote-photo{
-  width:62px;
-  height:62px;
-  border-radius:10px;
-  background:linear-gradient(135deg,#394750,#111820);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:43px;
-  overflow:hidden;
+.vote-card.my-vote{
+  border:2px solid #d4af37;
+  background:linear-gradient(90deg,#263b18,#151d0a);
+  box-shadow:0 0 18px #d4af3740;
 }
 
-.vote-photo span{
-  transform:scaleX(-1);
+.number{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  font-weight:1000;
+  font-size:18px;
+  color:#111;
 }
 
-.vote-main{
-  flex:1;
-}
+.n1{background:#fff}
+.n2{background:#222;color:#fff}
+.n3{background:#e52d2d;color:#fff}
+.n4{background:#2d8ed8;color:#fff}
+.n5{background:#e8d94f}
 
-.vote-name{
-  font-weight:900;
+.horse-name{
+  font-weight:1000;
   font-size:16px;
 }
 
 .winrate{
-  margin-top:5px;
-  font-size:12px;
-  color:#f1cb63;
+  text-align:right;
+  color:#f0d66d;
+  font-weight:1000;
 }
 
-.vote-button{
+.winrate small{
+  display:block;
+  color:#9caf9f;
+  font-size:10px;
+}
+
+.vote-btn{
   border:0;
-  border-radius:9px;
-  padding:11px 13px;
-  background:linear-gradient(180deg,#e2bc55,#9a6b19);
-  color:#fff;
-  font-weight:900;
+  border-radius:8px;
+  padding:11px 8px;
+  background:linear-gradient(#d4af37,#987018);
+  color:#10150b;
+  font-weight:1000;
   cursor:pointer;
 }
 
-.vote-button:disabled{
-  opacity:.35;
+.vote-btn:hover{
+  filter:brightness(1.15);
+}
+
+.vote-btn:disabled{
+  background:#4c574f;
+  color:#bbc3bc;
   cursor:not-allowed;
 }
 
-.vote-message{
-  text-align:center;
-  margin-top:15px;
-  padding:12px;
+.my-vote-badge{
+  display:inline-block;
+  margin-left:7px;
+  background:#d4af37;
+  color:#10150b;
+  padding:3px 6px;
+  border-radius:5px;
+  font-size:10px;
+  font-weight:1000;
+}
+
+.my-vote-box{
+  margin:12px;
+  padding:15px;
+  border:1px solid #d4af37;
+  background:linear-gradient(90deg,#30290d,#151b0d);
   border-radius:10px;
-  background:#101722;
-  border:1px solid #303b4a;
-  color:#c5ccd7;
-  font-size:12px;
+  display:none;
 }
 
-.ranking-list{
+.my-vote-box.show{
+  display:block;
+}
+
+.my-vote-title{
+  color:#d4af37;
+  font-size:11px;
+  font-weight:1000;
+}
+
+.my-vote-name{
+  margin-top:4px;
+  font-size:21px;
+  font-weight:1000;
+}
+
+/* =========================
+   RANKING
+========================= */
+
+.rank-row{
   display:grid;
-  gap:10px;
-}
-
-.rank-card{
-  background:linear-gradient(90deg,#171e29,#090d13);
-  border:1px solid #344052;
-  border-radius:12px;
-  padding:13px;
-  display:flex;
+  grid-template-columns:55px 1fr 100px;
   align-items:center;
-  gap:12px;
+  padding:14px;
+  border-bottom:1px solid #294332;
 }
 
-.rank-number{
-  width:44px;
-  text-align:center;
-  font-size:25px;
-  font-weight:900;
-  color:#f4d36c;
+.rank-row:last-child{
+  border-bottom:0;
+}
+
+.rank-no{
+  font-size:22px;
+  font-weight:1000;
+  color:#d4af37;
 }
 
 .rank-name{
-  flex:1;
-  font-weight:900;
+  font-weight:1000;
 }
 
 .rank-count{
   text-align:right;
+  color:#f0d66d;
+  font-weight:1000;
 }
 
-.rank-votes{
-  font-size:18px;
-  font-weight:900;
-  color:#f4d36c;
+.notice{
+  padding:13px;
+  color:#93a799;
+  font-size:11px;
+  line-height:1.6;
 }
 
-.rank-label{
-  font-size:9px;
-  color:#7f8999;
+.status{
+  padding:10px 13px;
+  font-size:12px;
+  color:#b8c8bb;
 }
 
-.rank-bar{
-  height:5px;
-  background:#252d39;
-  border-radius:10px;
-  margin-top:8px;
-  overflow:hidden;
+.error{
+  color:#ff8d8d;
 }
 
-.rank-bar-fill{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#d9ad43,#f7df83);
-  transition:width .5s;
-}
-
-.rank-card:nth-child(1){
-  border-color:#d9ad43;
-  box-shadow:0 0 18px rgba(217,173,67,.18);
-}
-
-.rank-card:nth-child(2){
-  border-color:#9da5ad;
-}
-
-.rank-card:nth-child(3){
-  border-color:#9a6b42;
-}
-
-.footer{
-  text-align:center;
-  color:#687283;
-  font-size:10px;
-  margin-top:30px;
-  line-height:1.8;
-}
-
-.connection{
-  position:fixed;
-  bottom:12px;
-  right:12px;
-  background:#101722;
-  border:1px solid #344052;
-  padding:7px 10px;
-  border-radius:20px;
-  font-size:10px;
-  color:#8d98a8;
-  z-index:200;
-}
-
-@media(max-width:600px){
+@media(max-width:700px){
 
   .logo{
-    font-size:24px;
+    font-size:21px;
   }
 
-  nav{
-    top:88px;
+  .hero h1{
+    font-size:30px;
+  }
+
+  .vote-card{
+    grid-template-columns:42px 1fr;
+  }
+
+  .winrate{
+    text-align:left;
+    grid-column:2;
+  }
+
+  .vote-btn{
+    grid-column:2;
   }
 
   .track{
     height:330px;
   }
 
-  .horse{
+  .horse-run{
     font-size:35px;
-  }
-
-  .horse-label{
-    font-size:8px;
-  }
-
-  .vote-card{
-    gap:8px;
-  }
-
-  .vote-photo{
-    width:52px;
-    height:52px;
-    font-size:35px;
-  }
-
-  .vote-button{
-    padding:10px 8px;
-    font-size:11px;
   }
 }
 </style>
@@ -586,582 +536,249 @@ nav{
 <body>
 
 <header>
-
-  <div class="logo">DOKKYO RACE</div>
-
-  <div class="subtitle">
-    SASE 34 FESTIVAL SPECIAL
+  <div class="head">
+    <div class="logo">🏇 DOKKYO RACE</div>
+    <div class="live">● LIVE</div>
   </div>
-
-  <div class="live">
-    <span class="live-dot"></span>
-    LIVE
-  </div>
-
 </header>
 
+<div class="wrap">
+
+<section class="hero">
+  <div class="mini">SASE 34 FESTIVAL SPECIAL</div>
+  <h1>DOKKYO RACE</h1>
+  <p>文化祭スペシャル・無料人気投票</p>
+</section>
 
 <nav>
-
-  <button class="nav-btn active"
-    onclick="showPage('race',this)">
-    🏇 RACE
-  </button>
-
-  <button class="nav-btn"
-    onclick="showPage('vote',this)">
-    🎫 投票
-  </button>
-
-  <button class="nav-btn"
-    onclick="showPage('ranking',this)">
-    🏆 ランキング
-  </button>
-
+  <button class="navbtn active" onclick="showPage('race',this)">🏇 RACE</button>
+  <button class="navbtn" onclick="showPage('vote',this)">🎯 投票</button>
+  <button class="navbtn" onclick="showPage('ranking',this)">🏆 ランキング</button>
 </nav>
 
-
-<!-- =========================
-     RACE
-========================= -->
+<!-- ================= RACE ================= -->
 
 <section id="race" class="page active">
 
-  <div class="section-title">
-    DOKKYO RACE
-  </div>
+  <div class="card">
 
-  <div class="section-sub">
-    5頭が一斉にスタート！文化祭スペシャルレース
-  </div>
-
-  <div class="race-board">
-
-    <div class="race-top">
-
-      <div class="race-title">
-        SPECIAL RACE
-      </div>
-
-      <div class="race-status">
-        ● ON AIR
-      </div>
-
+    <div class="bar">
+      🏁 RACE　―　DOKKYO FESTIVAL SPECIAL
     </div>
 
-    <div class="track-wrap">
+    <div class="raceinfo">
+      <span class="tag">5頭立て</span>
+      <span class="tag">無料人気投票</span>
+      <span class="tag">直線コース</span>
+      <span class="tag">SASE34</span>
+    </div>
 
-      <div class="track">
+    <div class="track">
 
-        <div class="start-line"></div>
+      <div class="startline"></div>
+      <div class="finishline"></div>
+      <div class="finishlabel">FINISH</div>
 
-        <div class="finish-line"></div>
+      <div class="lane">
+        <div class="horse-label">1 オレンジスター</div>
+        <div class="horse-run h1"><span>🐎</span></div>
+      </div>
 
-        <div class="finish-label">
-          FINISH
-        </div>
+      <div class="lane">
+        <div class="horse-label">2 ロイヤルポニー</div>
+        <div class="horse-run h2"><span>🐎</span></div>
+      </div>
 
-        <div class="lane"></div>
-        <div class="lane"></div>
-        <div class="lane"></div>
-        <div class="lane"></div>
-        <div class="lane"></div>
+      <div class="lane">
+        <div class="horse-label">3 グリーンフラッシュ</div>
+        <div class="horse-run h3"><span>🐎</span></div>
+      </div>
 
+      <div class="lane">
+        <div class="horse-label">4 ビッくらサンダー</div>
+        <div class="horse-run h4"><span>🐎</span></div>
+      </div>
 
-        <div class="racer r1">
-          <div class="racer-inner">
-            <div class="horse">🐎</div>
-            <div class="horse-label">
-              1 オレンジスター
-            </div>
-          </div>
-        </div>
-
-
-        <div class="racer r2">
-          <div class="racer-inner">
-            <div class="horse">🐎</div>
-            <div class="horse-label">
-              2 ロイヤルポニー
-            </div>
-          </div>
-        </div>
-
-
-        <div class="racer r3">
-          <div class="racer-inner">
-            <div class="horse">🐎</div>
-            <div class="horse-label">
-              3 グリーンフラッシュ
-            </div>
-          </div>
-        </div>
-
-
-        <div class="racer r4">
-          <div class="racer-inner">
-            <div class="horse">🐎</div>
-            <div class="horse-label">
-              4 ビッくらサンダー
-            </div>
-          </div>
-        </div>
-
-
-        <div class="racer r5">
-          <div class="racer-inner">
-            <div class="horse">🐎</div>
-            <div class="horse-label">
-              5 アサクサダッシュ
-            </div>
-          </div>
-        </div>
-
+      <div class="lane">
+        <div class="horse-label">5 アサクサダッシュ</div>
+        <div class="horse-run h5"><span>🐎</span></div>
       </div>
 
     </div>
 
   </div>
 
+  <div class="card">
 
-  <div class="section-title" style="margin-top:25px;">
-    🐎 馬紹介
-  </div>
-
-  <div class="section-sub">
-    今回のスペシャルレース出走馬
-  </div>
-
-
-  <div class="horse-grid">
-
-    <div class="horse-card">
-
-      <div class="horse-photo">
-        <div class="horse-number">1</div>
-      </div>
-
-      <div class="horse-info">
-        <div class="horse-name">
-          オレンジスター
-        </div>
-
-        <div class="horse-desc">
-          注目を集める期待の一頭
-        </div>
-      </div>
-
+    <div class="bar">
+      📋 出走馬
     </div>
 
-
-    <div class="horse-card">
-
-      <div class="horse-photo">
-        <div class="horse-number">2</div>
-      </div>
-
-      <div class="horse-info">
-        <div class="horse-name">
-          ロイヤルポニー
-        </div>
-
-        <div class="horse-desc">
-          華麗な走りが魅力
-        </div>
-      </div>
-
+    <div class="rank-row">
+      <div class="rank-no">1</div>
+      <div class="rank-name">オレンジスター</div>
+      <div class="rank-count">勝率 19%</div>
     </div>
 
-
-    <div class="horse-card">
-
-      <div class="horse-photo">
-        <div class="horse-number">3</div>
-      </div>
-
-      <div class="horse-info">
-        <div class="horse-name">
-          グリーンフラッシュ
-        </div>
-
-        <div class="horse-desc">
-          スピード自慢の注目馬
-        </div>
-      </div>
-
+    <div class="rank-row">
+      <div class="rank-no">2</div>
+      <div class="rank-name">ロイヤルポニー</div>
+      <div class="rank-count">勝率 32%</div>
     </div>
 
-
-    <div class="horse-card">
-
-      <div class="horse-photo">
-        <div class="horse-number">4</div>
-      </div>
-
-      <div class="horse-info">
-        <div class="horse-name">
-          ビッくらサンダー
-        </div>
-
-        <div class="horse-desc">
-          最後まで目が離せない
-        </div>
-      </div>
-
+    <div class="rank-row">
+      <div class="rank-no">3</div>
+      <div class="rank-name">グリーンフラッシュ</div>
+      <div class="rank-count">勝率 14%</div>
     </div>
 
+    <div class="rank-row">
+      <div class="rank-no">4</div>
+      <div class="rank-name">ビッくらサンダー</div>
+      <div class="rank-count">勝率 25%</div>
+    </div>
 
-    <div class="horse-card">
-
-      <div class="horse-photo">
-        <div class="horse-number">5</div>
-      </div>
-
-      <div class="horse-info">
-        <div class="horse-name">
-          アサクサダッシュ
-        </div>
-
-        <div class="horse-desc">
-          一発逆転を狙う俊足馬
-        </div>
-      </div>
-
+    <div class="rank-row">
+      <div class="rank-no">5</div>
+      <div class="rank-name">アサクサダッシュ</div>
+      <div class="rank-count">勝率 10%</div>
     </div>
 
   </div>
 
 </section>
 
-
-<!-- =========================
-     VOTE
-========================= -->
+<!-- ================= VOTE ================= -->
 
 <section id="vote" class="page">
 
-  <div class="section-title">
-    🎫 投票
-  </div>
+  <div class="card">
 
-  <div class="section-sub">
-    あなたが応援する一頭を選んでください
-  </div>
-
-
-  <div class="vote-grid">
-
-
-    <div class="vote-card">
-
-      <div class="vote-num">1</div>
-
-      <div class="vote-photo">
-        <span>🐎</span>
-      </div>
-
-      <div class="vote-main">
-
-        <div class="vote-name">
-          オレンジスター
-        </div>
-
-        <div class="winrate">
-          勝率 19%
-        </div>
-
-      </div>
-
-      <button class="vote-button"
-        onclick="vote(1)">
-        投票
-      </button>
-
+    <div class="bar">
+      🎯 投票　―　あなたの1頭を選択
     </div>
 
-
-    <div class="vote-card">
-
-      <div class="vote-num">2</div>
-
-      <div class="vote-photo">
-        <span>🐎</span>
-      </div>
-
-      <div class="vote-main">
-
-        <div class="vote-name">
-          ロイヤルポニー
-        </div>
-
-        <div class="winrate">
-          勝率 32%
-        </div>
-
-      </div>
-
-      <button class="vote-button"
-        onclick="vote(2)">
-        投票
-      </button>
-
+    <div id="voteStatus" class="status">
+      投票状況を確認中……
     </div>
 
-
-    <div class="vote-card">
-
-      <div class="vote-num">3</div>
-
-      <div class="vote-photo">
-        <span>🐎</span>
-      </div>
-
-      <div class="vote-main">
-
-        <div class="vote-name">
-          グリーンフラッシュ
-        </div>
-
-        <div class="winrate">
-          勝率 14%
-        </div>
-
-      </div>
-
-      <button class="vote-button"
-        onclick="vote(3)">
-        投票
-      </button>
-
+    <div id="myVoteBox" class="my-vote-box">
+      <div class="my-vote-title">✓ あなたの投票</div>
+      <div id="myVoteName" class="my-vote-name"></div>
     </div>
 
+    <div class="vote-list" id="voteList"></div>
 
-    <div class="vote-card">
-
-      <div class="vote-num">4</div>
-
-      <div class="vote-photo">
-        <span>🐎</span>
-      </div>
-
-      <div class="vote-main">
-
-        <div class="vote-name">
-          ビッくらサンダー
-        </div>
-
-        <div class="winrate">
-          勝率 25%
-        </div>
-
-      </div>
-
-      <button class="vote-button"
-        onclick="vote(4)">
-        投票
-      </button>
-
+    <div class="notice">
+      ※文化祭用の無料人気投票です。金銭の賭け・購入・換金には対応していません。
     </div>
 
-
-    <div class="vote-card">
-
-      <div class="vote-num">5</div>
-
-      <div class="vote-photo">
-        <span>🐎</span>
-      </div>
-
-      <div class="vote-main">
-
-        <div class="vote-name">
-          アサクサダッシュ
-        </div>
-
-        <div class="winrate">
-          勝率 10%
-        </div>
-
-      </div>
-
-      <button class="vote-button"
-        onclick="vote(5)">
-        投票
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div id="voteMessage"
-    class="vote-message">
-    🔄 Firebase接続中...
-  </div>
-
-
-  <div class="footer">
-    ※勝率はサイト演出用の固定表示です。<br>
-    このサイトは文化祭の無料人気投票です。
   </div>
 
 </section>
 
-
-<!-- =========================
-     RANKING
-========================= -->
+<!-- ================= RANKING ================= -->
 
 <section id="ranking" class="page">
 
-  <div class="section-title">
-    🏆 人気ランキング
-  </div>
+  <div class="card">
 
-  <div class="section-sub">
-    みんなの投票によるリアルタイムランキング
-  </div>
+    <div class="bar">
+      🏆 ランキング　―　リアルタイム集計
+    </div>
 
+    <div id="rankingStatus" class="status">
+      集計中……
+    </div>
 
-  <div id="rankingList"
-    class="ranking-list">
+    <div id="rankingList"></div>
 
-    <div class="rank-card">
-
-      <div class="rank-number">
-        1
-      </div>
-
-      <div class="rank-name">
-        読み込み中...
-      </div>
-
+    <div class="notice">
+      ※ランキングは本日の投票数をリアルタイムで集計しています。
     </div>
 
   </div>
 
-
-  <div class="vote-message">
-    🔥 投票が入るとランキングが自動更新されます
-  </div>
-
 </section>
 
-
-<div class="connection"
-  id="connection">
-  🔄 Firebase接続中...
 </div>
-
-
-<!-- =========================
-     FIREBASE
-========================= -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 
 <script>
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+/* =========================================
+   Firebase
+========================================= */
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
-
-  authDomain:
-    "sase34-9cebc.firebaseapp.com",
-
-  projectId:
-    "sase34-9cebc",
-
-  storageBucket:
-    "sase34-9cebc.firebasestorage.app",
-
-  messagingSenderId:
-    "507211802803",
-
-  appId:
-    "1:507211802803:web:d804fef0ed4aeded9ba8c6"
-
+  apiKey: "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
+  authDomain: "sase34-9cebc.firebaseapp.com",
+  projectId: "sase34-9cebc",
+  storageBucket: "sase34-9cebc.firebasestorage.app",
+  messagingSenderId: "507211802803",
+  appId: "1:507211802803:web:d804fef0ed4aeded9ba8c6"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
-
 const db = firebase.firestore();
 
-let currentUser = null;
+/* =========================================
+   馬データ
+========================================= */
 
-
-/* =========================
-   HORSE DATA
-========================= */
-
-const horses = {
-
-  1:{
+const horses = [
+  {
+    id:"1",
     name:"オレンジスター",
-    winrate:19
+    winrate:"19%",
+    cls:"n1"
   },
-
-  2:{
+  {
+    id:"2",
     name:"ロイヤルポニー",
-    winrate:32
+    winrate:"32%",
+    cls:"n2"
   },
-
-  3:{
+  {
+    id:"3",
     name:"グリーンフラッシュ",
-    winrate:14
+    winrate:"14%",
+    cls:"n3"
   },
-
-  4:{
+  {
+    id:"4",
     name:"ビッくらサンダー",
-    winrate:25
+    winrate:"25%",
+    cls:"n4"
   },
-
-  5:{
+  {
+    id:"5",
     name:"アサクサダッシュ",
-    winrate:10
+    winrate:"10%",
+    cls:"n5"
   }
+];
 
-};
+let currentUser = null;
+let myVote = null;
+let unsubscribeRanking = null;
 
-
-/* =========================
-   JAPAN DATE
-========================= */
-
-/*
-  日本時間の日付を取得。
-  日付が変わると自動的に
-  別の投票場所へ切り替わる。
-*/
+/* =========================================
+   日本時間の日付
+========================================= */
 
 function getJapanDate(){
 
   const formatter =
-    new Intl.DateTimeFormat(
-      "ja-JP",
-      {
-        timeZone:"Asia/Tokyo",
-        year:"numeric",
-        month:"2-digit",
-        day:"2-digit"
-      }
-    );
+    new Intl.DateTimeFormat("ja-JP",{
+      timeZone:"Asia/Tokyo",
+      year:"numeric",
+      month:"2-digit",
+      day:"2-digit"
+    });
 
-  const parts =
-    formatter.formatToParts(new Date());
+  const parts = formatter.formatToParts(new Date());
 
   const year =
     parts.find(p=>p.type==="year").value;
@@ -1173,18 +790,15 @@ function getJapanDate(){
     parts.find(p=>p.type==="day").value;
 
   return `${year}-${month}-${day}`;
-
 }
 
-
-/* =========================
-   CURRENT DAY PATH
-========================= */
+/* =========================================
+   今日の投票コレクション
+========================================= */
 
 function getVotesCollection(){
 
-  const japanDate =
-    getJapanDate();
+  const japanDate = getJapanDate();
 
   return db
     .collection("races")
@@ -1192,177 +806,264 @@ function getVotesCollection(){
     .collection("dailyVotes")
     .doc(japanDate)
     .collection("votes");
-
 }
 
-
-/* =========================
-   PAGE SWITCH
-========================= */
+/* =========================================
+   ページ切り替え
+========================================= */
 
 function showPage(page,button){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(p=>{
-      p.classList.remove("active");
-    });
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
 
-  document
-    .getElementById(page)
+  document.getElementById(page)
     .classList.add("active");
 
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(b=>{
-      b.classList.remove("active");
-    });
+  document.querySelectorAll(".navbtn")
+    .forEach(b=>b.classList.remove("active"));
 
   button.classList.add("active");
 
-}
-
-
-/* =========================
-   FIREBASE START
-========================= */
-
-async function startFirebase(){
-
-  try{
-
-    if(!auth.currentUser){
-
-      await auth.signInAnonymously();
-
-    }
-
-    currentUser =
-      auth.currentUser;
-
-
-    document
-      .getElementById("connection")
-      .textContent =
-      "🟢 Firebase ONLINE";
-
-
-    document
-      .getElementById("voteMessage")
-      .textContent =
-      "🟢 本日の投票受付中";
-
-
-    checkAlreadyVoted();
-
+  if(page==="ranking"){
     listenRanking();
-
   }
+}
 
-  catch(error){
+/* =========================================
+   投票画面
+========================================= */
 
-    console.error(error);
+function renderVoteList(){
 
-    document
-      .getElementById("connection")
-      .textContent =
-      "🔴 Firebase ERROR";
+  const box =
+    document.getElementById("voteList");
 
+  box.innerHTML = "";
 
-    document
-      .getElementById("voteMessage")
-      .textContent =
-      "⚠️ Firebaseに接続できません";
+  horses.forEach(h=>{
 
-  }
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "vote-card";
+
+    div.id =
+      "vote-card-"+h.id;
+
+    div.innerHTML = `
+      <div class="number ${h.cls}">
+        ${h.id}
+      </div>
+
+      <div class="horse-name">
+        ${h.name}
+        <span
+          id="badge-${h.id}"
+          class="my-vote-badge"
+          style="display:none"
+        >
+          ✓ 投票済み
+        </span>
+      </div>
+
+      <div class="winrate">
+        <small>勝率</small>
+        ${h.winrate}
+      </div>
+
+      <button
+        class="vote-btn"
+        id="vote-btn-${h.id}"
+        onclick="vote('${h.id}')"
+      >
+        この馬に投票
+      </button>
+    `;
+
+    box.appendChild(div);
+
+  });
 
 }
 
-
-/* =========================
-   CHECK TODAY'S VOTE
-========================= */
+/* =========================================
+   すでに投票しているか確認
+========================================= */
 
 async function checkAlreadyVoted(){
 
-  if(!currentUser)return;
-
-
-  const ref =
-    getVotesCollection()
-      .doc(currentUser.uid);
-
+  if(!currentUser){
+    return;
+  }
 
   try{
+
+    const ref =
+      getVotesCollection()
+      .doc(currentUser.uid);
 
     const snap =
       await ref.get();
 
-
     if(snap.exists){
 
-      disableVoteButtons();
+      myVote =
+        String(snap.data().horseId);
 
+      showMyVote();
 
-      document
-        .getElementById("voteMessage")
-        .textContent =
-        "✅ 本日の投票は完了しています！🏆";
+    }else{
+
+      myVote = null;
+
+      hideMyVote();
 
     }
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(error);
+
+    document.getElementById("voteStatus")
+      .innerHTML =
+      `<span class="error">
+        投票状態の確認に失敗しました
+      </span>`;
 
   }
 
 }
 
+/* =========================================
+   自分の投票を表示
+========================================= */
 
-/* =========================
-   VOTE
-========================= */
+function showMyVote(){
+
+  if(!myVote){
+    return;
+  }
+
+  const horse =
+    horses.find(h=>h.id===myVote);
+
+  if(!horse){
+    return;
+  }
+
+  const box =
+    document.getElementById("myVoteBox");
+
+  const name =
+    document.getElementById("myVoteName");
+
+  const status =
+    document.getElementById("voteStatus");
+
+  box.classList.add("show");
+
+  name.textContent =
+    `${horse.id}番　${horse.name}`;
+
+  status.textContent =
+    "✓ 本日の投票は完了しています";
+
+  horses.forEach(h=>{
+
+    const btn =
+      document.getElementById("vote-btn-"+h.id);
+
+    const card =
+      document.getElementById("vote-card-"+h.id);
+
+    const badge =
+      document.getElementById("badge-"+h.id);
+
+    if(h.id===myVote){
+
+      card.classList.add("my-vote");
+
+      badge.style.display =
+        "inline-block";
+
+      btn.textContent =
+        "✓ 投票済み";
+
+    }else{
+
+      btn.disabled = true;
+
+      btn.textContent =
+        "投票済み";
+
+    }
+
+  });
+
+}
+
+/* =========================================
+   投票表示をリセット
+========================================= */
+
+function hideMyVote(){
+
+  const box =
+    document.getElementById("myVoteBox");
+
+  box.classList.remove("show");
+
+  document.getElementById("voteStatus")
+    .textContent =
+    "好きな馬を1頭選んで投票してください。";
+
+}
+
+/* =========================================
+   投票
+========================================= */
 
 async function vote(horseId){
 
   if(!currentUser){
 
-    alert(
-      "まだ接続中です。少し待ってから投票してください。"
-    );
+    alert("投票の準備中です。少し待ってからもう一度お試しください。");
 
     return;
-
   }
 
+  if(myVote){
 
-  const ref =
-    getVotesCollection()
-      .doc(currentUser.uid);
+    alert("本日の投票はすでに完了しています。");
 
+    return;
+  }
+
+  const horse =
+    horses.find(h=>h.id===String(horseId));
+
+  if(!horse){
+    return;
+  }
+
+  const buttons =
+    document.querySelectorAll(".vote-btn");
+
+  buttons.forEach(b=>b.disabled=true);
+
+  const status =
+    document.getElementById("voteStatus");
+
+  status.textContent =
+    "投票を送信中……";
 
   try{
 
-    const existing =
-      await ref.get();
-
-
-    if(existing.exists){
-
-      alert(
-        "この端末では本日の投票はすでに完了しています。"
-      );
-
-      disableVoteButtons();
-
-      return;
-
-    }
-
+    const ref =
+      getVotesCollection()
+      .doc(currentUser.uid);
 
     await ref.set({
 
@@ -1373,242 +1074,194 @@ async function vote(horseId){
 
     });
 
+    myVote =
+      String(horseId);
 
-    disableVoteButtons();
+    showMyVote();
 
-
-    document
-      .getElementById("voteMessage")
-      .textContent =
-      "🎉 投票ありがとうございました！🏆";
-
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(error);
 
-    alert(
-      "投票に失敗しました。もう一度試してください。"
-    );
+    buttons.forEach(b=>{
+
+      b.disabled=false;
+
+    });
+
+    status.innerHTML =
+      `<span class="error">
+        投票に失敗しました。Firebaseの設定・ルールを確認してください。
+        <br>
+        エラー：${error.code || "unknown"}
+      </span>`;
 
   }
 
 }
 
-
-/* =========================
-   DISABLE BUTTONS
-========================= */
-
-function disableVoteButtons(){
-
-  document
-    .querySelectorAll(".vote-button")
-    .forEach(button=>{
-
-      button.disabled = true;
-
-      button.textContent =
-        "投票済み";
-
-    });
-
-}
-
-
-/* =========================
-   REALTIME RANKING
-========================= */
+/* =========================================
+   ランキング
+========================================= */
 
 function listenRanking(){
 
-  const votesRef =
-    getVotesCollection();
+  if(unsubscribeRanking){
+    unsubscribeRanking();
+  }
 
+  const status =
+    document.getElementById("rankingStatus");
 
-  votesRef.onSnapshot(
+  status.textContent =
+    "リアルタイム集計中……";
 
-    snapshot=>{
+  unsubscribeRanking =
+    getVotesCollection()
+    .onSnapshot(
 
-      const counts = {
+      snapshot=>{
 
-        1:0,
-        2:0,
-        3:0,
-        4:0,
-        5:0
+        const counts = {};
 
-      };
+        horses.forEach(h=>{
+          counts[h.id]=0;
+        });
 
+        snapshot.forEach(doc=>{
 
-      snapshot.forEach(doc=>{
+          const data =
+            doc.data();
 
-        const data =
-          doc.data();
+          const id =
+            String(data.horseId);
 
-        const id =
-          String(data.horseId);
+          if(counts[id] !== undefined){
+            counts[id]++;
+          }
 
+        });
 
-        if(counts[id] !== undefined){
+        const ranking =
+          horses
+          .map(h=>({
+            ...h,
+            count:counts[h.id]
+          }))
+          .sort((a,b)=>{
 
-          counts[id]++;
+            if(b.count!==a.count){
+              return b.count-a.count;
+            }
 
-        }
+            return Number(a.id)-Number(b.id);
 
-      });
+          });
 
+        renderRanking(ranking);
 
-      renderRanking(counts);
+        status.textContent =
+          `現在 ${snapshot.size}票`;
 
-    },
+      },
 
+      error=>{
 
-    error=>{
+        console.error(error);
 
-      console.error(error);
+        status.innerHTML =
+          `<span class="error">
+            ランキング取得に失敗しました。
+          </span>`;
 
+      }
 
-      document
-        .getElementById("rankingList")
-        .innerHTML = `
-
-          <div class="vote-message">
-            ⚠️ ランキングを読み込めませんでした
-          </div>
-
-        `;
-
-    }
-
-  );
+    );
 
 }
 
+/* =========================================
+   ランキング表示
+========================================= */
 
-/* =========================
-   RENDER RANKING
-========================= */
+function renderRanking(ranking){
 
-function renderRanking(counts){
+  const box =
+    document.getElementById("rankingList");
 
-  const sorted =
-    Object.keys(counts).sort(
-      (a,b)=>counts[b]-counts[a]
-    );
+  box.innerHTML = "";
 
+  ranking.forEach((h,index)=>{
 
-  const maxVotes =
-    Math.max(
-      ...Object.values(counts),
-      1
-    );
-
-
-  const rankingList =
-    document.getElementById(
-      "rankingList"
-    );
-
-
-  rankingList.innerHTML = "";
-
-
-  sorted.forEach((id,index)=>{
-
-    const horse =
-      horses[id];
-
-
-    const votes =
-      counts[id];
-
-
-    const percent =
-      Math.round(
-        (votes/maxVotes)*100
-      );
-
-
-    let medal = "";
-
-
-    if(index===0){
-
-      medal="🥇";
-
-    }
-
-    else if(index===1){
-
-      medal="🥈";
-
-    }
-
-    else if(index===2){
-
-      medal="🥉";
-
-    }
-
-
-    const card =
+    const row =
       document.createElement("div");
 
+    row.className =
+      "rank-row";
 
-    card.className =
-      "rank-card";
+    row.innerHTML = `
 
-
-    card.innerHTML = `
-
-      <div class="rank-number">
-        ${medal || index+1}
+      <div class="rank-no">
+        ${index+1}位
       </div>
 
       <div class="rank-name">
-
-        ${id}. ${horse.name}
-
-        <div class="rank-bar">
-
-          <div
-            class="rank-bar-fill"
-            style="width:${percent}%"
-          ></div>
-
-        </div>
-
+        ${h.id}番　${h.name}
       </div>
 
       <div class="rank-count">
-
-        <div class="rank-votes">
-          ${votes}
-        </div>
-
-        <div class="rank-label">
-          票
-        </div>
-
+        ${h.count}票
       </div>
 
     `;
 
-
-    rankingList.appendChild(card);
+    box.appendChild(row);
 
   });
 
 }
 
+/* =========================================
+   Firebaseログイン
+========================================= */
 
-/* =========================
-   START
-========================= */
+auth.onAuthStateChanged(async user=>{
 
-startFirebase();
+  currentUser = user;
+
+  if(user){
+
+    renderVoteList();
+
+    await checkAlreadyVoted();
+
+    listenRanking();
+
+  }
+
+});
+
+/* =========================================
+   匿名ログイン
+========================================= */
+
+auth.signInAnonymously()
+.catch(error=>{
+
+  console.error(error);
+
+  document.getElementById("voteStatus")
+    .innerHTML =
+    `<span class="error">
+      投票システムへの接続に失敗しました。
+      <br>
+      ${error.code || ""}
+    </span>`;
+
+});
+
+/* 初期表示 */
+renderVoteList();
 
 </script>
 
