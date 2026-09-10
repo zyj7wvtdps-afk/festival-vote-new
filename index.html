@@ -21,10 +21,6 @@ body{
   min-height:100vh;
 }
 
-/* =========================
-   HEADER
-========================= */
-
 header{
   background:linear-gradient(180deg,#111827,#05070b);
   border-bottom:2px solid #d9ad42;
@@ -79,10 +75,6 @@ header{
   50%{opacity:.25;transform:scale(.7)}
 }
 
-/* =========================
-   NAV
-========================= */
-
 nav{
   display:flex;
   gap:7px;
@@ -113,10 +105,6 @@ nav{
   box-shadow:0 0 15px rgba(240,196,80,.35);
 }
 
-/* =========================
-   PAGE
-========================= */
-
 .page{
   display:none;
   max-width:1000px;
@@ -143,10 +131,6 @@ nav{
   font-size:12px;
   margin-bottom:18px;
 }
-
-/* =========================
-   RACE
-========================= */
 
 .race-board{
   background:linear-gradient(180deg,#151c28,#080b10);
@@ -177,8 +161,6 @@ nav{
   font-weight:bold;
 }
 
-/* STRAIGHT TRACK */
-
 .track-wrap{
   padding:25px 10px 28px;
   background:
@@ -202,8 +184,6 @@ nav{
   box-shadow:inset 0 0 35px #000;
 }
 
-/* lanes */
-
 .lane{
   position:absolute;
   left:0;
@@ -217,8 +197,6 @@ nav{
 .lane:nth-child(3){top:40%}
 .lane:nth-child(4){top:60%}
 .lane:nth-child(5){top:80%}
-
-/* start */
 
 .start-line{
   position:absolute;
@@ -236,8 +214,6 @@ nav{
     );
   z-index:5;
 }
-
-/* finish */
 
 .finish-line{
   position:absolute;
@@ -269,8 +245,6 @@ nav{
   z-index:8;
 }
 
-/* horses */
-
 .racer{
   position:absolute;
   left:-80px;
@@ -279,6 +253,8 @@ nav{
   display:flex;
   align-items:center;
   z-index:10;
+
+  /* ゴールで止まらず、そのまま次の周回へ */
   animation:runStraight 7s linear infinite;
 }
 
@@ -308,13 +284,12 @@ nav{
   color:#fff;
 }
 
+/* 途中で停止する区間を完全に削除 */
 @keyframes runStraight{
   0%{
     left:-80px;
   }
-  82%{
-    left:calc(100% - 95px);
-  }
+
   100%{
     left:calc(100% - 95px);
   }
@@ -325,10 +300,6 @@ nav{
 .racer.r3{top:40%;animation-delay:-2.4s}
 .racer.r4{top:60%;animation-delay:-3.6s}
 .racer.r5{top:80%;animation-delay:-4.8s}
-
-/* =========================
-   HORSE CARDS
-========================= */
 
 .horse-grid{
   display:grid;
@@ -394,10 +365,6 @@ nav{
   font-size:11px;
   margin-top:5px;
 }
-
-/* =========================
-   VOTE
-========================= */
 
 .vote-grid{
   display:grid;
@@ -484,10 +451,6 @@ nav{
   font-size:12px;
 }
 
-/* =========================
-   RANKING
-========================= */
-
 .ranking-list{
   display:grid;
   gap:10px;
@@ -546,8 +509,6 @@ nav{
   transition:width .5s;
 }
 
-/* medals */
-
 .rank-card:nth-child(1){
   border-color:#d9ad43;
   box-shadow:0 0 18px rgba(217,173,67,.18);
@@ -560,10 +521,6 @@ nav{
 .rank-card:nth-child(3){
   border-color:#9a6b42;
 }
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer{
   text-align:center;
@@ -586,9 +543,8 @@ nav{
   z-index:200;
 }
 
-/* mobile */
-
 @media(max-width:600px){
+
   .logo{
     font-size:24px;
   }
@@ -630,32 +586,43 @@ nav{
 <body>
 
 <header>
+
   <div class="logo">DOKKYO RACE</div>
-  <div class="subtitle">SASE 34 FESTIVAL SPECIAL</div>
+
+  <div class="subtitle">
+    SASE 34 FESTIVAL SPECIAL
+  </div>
 
   <div class="live">
     <span class="live-dot"></span>
     LIVE
   </div>
+
 </header>
 
+
 <nav>
-  <button class="nav-btn active" onclick="showPage('race',this)">
+
+  <button class="nav-btn active"
+    onclick="showPage('race',this)">
     🏇 RACE
   </button>
 
-  <button class="nav-btn" onclick="showPage('vote',this)">
+  <button class="nav-btn"
+    onclick="showPage('vote',this)">
     🎫 投票
   </button>
 
-  <button class="nav-btn" onclick="showPage('ranking',this)">
+  <button class="nav-btn"
+    onclick="showPage('ranking',this)">
     🏆 ランキング
   </button>
+
 </nav>
 
 
 <!-- =========================
-     RACE PAGE
+     RACE
 ========================= -->
 
 <section id="race" class="page active">
@@ -671,6 +638,7 @@ nav{
   <div class="race-board">
 
     <div class="race-top">
+
       <div class="race-title">
         SPECIAL RACE
       </div>
@@ -678,6 +646,7 @@ nav{
       <div class="race-status">
         ● ON AIR
       </div>
+
     </div>
 
     <div class="track-wrap">
@@ -687,51 +656,71 @@ nav{
         <div class="start-line"></div>
 
         <div class="finish-line"></div>
-        <div class="finish-label">FINISH</div>
+
+        <div class="finish-label">
+          FINISH
+        </div>
 
         <div class="lane"></div>
         <div class="lane"></div>
         <div class="lane"></div>
         <div class="lane"></div>
         <div class="lane"></div>
+
 
         <div class="racer r1">
           <div class="racer-inner">
             <div class="horse">🐎</div>
-            <div class="horse-label">1 オレンジスター</div>
+            <div class="horse-label">
+              1 オレンジスター
+            </div>
           </div>
         </div>
+
 
         <div class="racer r2">
           <div class="racer-inner">
             <div class="horse">🐎</div>
-            <div class="horse-label">2 ロイヤルポニー</div>
+            <div class="horse-label">
+              2 ロイヤルポニー
+            </div>
           </div>
         </div>
+
 
         <div class="racer r3">
           <div class="racer-inner">
             <div class="horse">🐎</div>
-            <div class="horse-label">3 グリーンフラッシュ</div>
+            <div class="horse-label">
+              3 グリーンフラッシュ
+            </div>
           </div>
         </div>
+
 
         <div class="racer r4">
           <div class="racer-inner">
             <div class="horse">🐎</div>
-            <div class="horse-label">4 ビッくらサンダー</div>
+            <div class="horse-label">
+              4 ビッくらサンダー
+            </div>
           </div>
         </div>
+
 
         <div class="racer r5">
           <div class="racer-inner">
             <div class="horse">🐎</div>
-            <div class="horse-label">5 アサクサダッシュ</div>
+            <div class="horse-label">
+              5 アサクサダッシュ
+            </div>
           </div>
         </div>
 
       </div>
+
     </div>
+
   </div>
 
 
@@ -743,56 +732,101 @@ nav{
     今回のスペシャルレース出走馬
   </div>
 
+
   <div class="horse-grid">
 
     <div class="horse-card">
+
       <div class="horse-photo">
         <div class="horse-number">1</div>
       </div>
+
       <div class="horse-info">
-        <div class="horse-name">オレンジスター</div>
-        <div class="horse-desc">注目を集める期待の一頭</div>
+        <div class="horse-name">
+          オレンジスター
+        </div>
+
+        <div class="horse-desc">
+          注目を集める期待の一頭
+        </div>
       </div>
+
     </div>
 
+
     <div class="horse-card">
+
       <div class="horse-photo">
         <div class="horse-number">2</div>
       </div>
+
       <div class="horse-info">
-        <div class="horse-name">ロイヤルポニー</div>
-        <div class="horse-desc">華麗な走りが魅力</div>
+        <div class="horse-name">
+          ロイヤルポニー
+        </div>
+
+        <div class="horse-desc">
+          華麗な走りが魅力
+        </div>
       </div>
+
     </div>
 
+
     <div class="horse-card">
+
       <div class="horse-photo">
         <div class="horse-number">3</div>
       </div>
+
       <div class="horse-info">
-        <div class="horse-name">グリーンフラッシュ</div>
-        <div class="horse-desc">スピード自慢の注目馬</div>
+        <div class="horse-name">
+          グリーンフラッシュ
+        </div>
+
+        <div class="horse-desc">
+          スピード自慢の注目馬
+        </div>
       </div>
+
     </div>
 
+
     <div class="horse-card">
+
       <div class="horse-photo">
         <div class="horse-number">4</div>
       </div>
+
       <div class="horse-info">
-        <div class="horse-name">ビッくらサンダー</div>
-        <div class="horse-desc">最後まで目が離せない</div>
+        <div class="horse-name">
+          ビッくらサンダー
+        </div>
+
+        <div class="horse-desc">
+          最後まで目が離せない
+        </div>
       </div>
+
     </div>
 
+
     <div class="horse-card">
+
       <div class="horse-photo">
         <div class="horse-number">5</div>
       </div>
+
       <div class="horse-info">
-        <div class="horse-name">アサクサダッシュ</div>
-        <div class="horse-desc">一発逆転を狙う俊足馬</div>
+        <div class="horse-name">
+          アサクサダッシュ
+        </div>
+
+        <div class="horse-desc">
+          一発逆転を狙う俊足馬
+        </div>
       </div>
+
     </div>
 
   </div>
@@ -801,7 +835,7 @@ nav{
 
 
 <!-- =========================
-     VOTE PAGE
+     VOTE
 ========================= -->
 
 <section id="vote" class="page">
@@ -814,9 +848,12 @@ nav{
     あなたが応援する一頭を選んでください
   </div>
 
+
   <div class="vote-grid">
 
+
     <div class="vote-card">
+
       <div class="vote-num">1</div>
 
       <div class="vote-photo">
@@ -824,17 +861,27 @@ nav{
       </div>
 
       <div class="vote-main">
-        <div class="vote-name">オレンジスター</div>
-        <div class="winrate">勝率 19%</div>
+
+        <div class="vote-name">
+          オレンジスター
+        </div>
+
+        <div class="winrate">
+          勝率 19%
+        </div>
+
       </div>
 
-      <button class="vote-button" onclick="vote(1)">
+      <button class="vote-button"
+        onclick="vote(1)">
         投票
       </button>
+
     </div>
 
 
     <div class="vote-card">
+
       <div class="vote-num">2</div>
 
       <div class="vote-photo">
@@ -842,17 +889,27 @@ nav{
       </div>
 
       <div class="vote-main">
-        <div class="vote-name">ロイヤルポニー</div>
-        <div class="winrate">勝率 32%</div>
+
+        <div class="vote-name">
+          ロイヤルポニー
+        </div>
+
+        <div class="winrate">
+          勝率 32%
+        </div>
+
       </div>
 
-      <button class="vote-button" onclick="vote(2)">
+      <button class="vote-button"
+        onclick="vote(2)">
         投票
       </button>
+
     </div>
 
 
     <div class="vote-card">
+
       <div class="vote-num">3</div>
 
       <div class="vote-photo">
@@ -860,17 +917,27 @@ nav{
       </div>
 
       <div class="vote-main">
-        <div class="vote-name">グリーンフラッシュ</div>
-        <div class="winrate">勝率 14%</div>
+
+        <div class="vote-name">
+          グリーンフラッシュ
+        </div>
+
+        <div class="winrate">
+          勝率 14%
+        </div>
+
       </div>
 
-      <button class="vote-button" onclick="vote(3)">
+      <button class="vote-button"
+        onclick="vote(3)">
         投票
       </button>
+
     </div>
 
 
     <div class="vote-card">
+
       <div class="vote-num">4</div>
 
       <div class="vote-photo">
@@ -878,17 +945,27 @@ nav{
       </div>
 
       <div class="vote-main">
-        <div class="vote-name">ビッくらサンダー</div>
-        <div class="winrate">勝率 25%</div>
+
+        <div class="vote-name">
+          ビッくらサンダー
+        </div>
+
+        <div class="winrate">
+          勝率 25%
+        </div>
+
       </div>
 
-      <button class="vote-button" onclick="vote(4)">
+      <button class="vote-button"
+        onclick="vote(4)">
         投票
       </button>
+
     </div>
 
 
     <div class="vote-card">
+
       <div class="vote-num">5</div>
 
       <div class="vote-photo">
@@ -896,20 +973,32 @@ nav{
       </div>
 
       <div class="vote-main">
-        <div class="vote-name">アサクサダッシュ</div>
-        <div class="winrate">勝率 10%</div>
+
+        <div class="vote-name">
+          アサクサダッシュ
+        </div>
+
+        <div class="winrate">
+          勝率 10%
+        </div>
+
       </div>
 
-      <button class="vote-button" onclick="vote(5)">
+      <button class="vote-button"
+        onclick="vote(5)">
         投票
       </button>
+
     </div>
 
   </div>
 
-  <div id="voteMessage" class="vote-message">
+
+  <div id="voteMessage"
+    class="vote-message">
     🔄 Firebase接続中...
   </div>
+
 
   <div class="footer">
     ※勝率はサイト演出用の固定表示です。<br>
@@ -920,7 +1009,7 @@ nav{
 
 
 <!-- =========================
-     RANKING PAGE
+     RANKING
 ========================= -->
 
 <section id="ranking" class="page">
@@ -933,14 +1022,24 @@ nav{
     みんなの投票によるリアルタイムランキング
   </div>
 
-  <div id="rankingList" class="ranking-list">
+
+  <div id="rankingList"
+    class="ranking-list">
 
     <div class="rank-card">
-      <div class="rank-number">1</div>
-      <div class="rank-name">読み込み中...</div>
+
+      <div class="rank-number">
+        1
+      </div>
+
+      <div class="rank-name">
+        読み込み中...
+      </div>
+
     </div>
 
   </div>
+
 
   <div class="vote-message">
     🔥 投票が入るとランキングが自動更新されます
@@ -949,37 +1048,59 @@ nav{
 </section>
 
 
-<div class="connection" id="connection">
+<div class="connection"
+  id="connection">
   🔄 Firebase接続中...
 </div>
 
 
-<!-- Firebase -->
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 
 <script>
 
 /* =========================
-   FIREBASE
+   FIREBASE CONFIG
 ========================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
-  authDomain: "sase34-9cebc.firebaseapp.com",
-  projectId: "sase34-9cebc",
-  storageBucket: "sase34-9cebc.firebasestorage.app",
-  messagingSenderId: "507211802803",
-  appId: "1:507211802803:web:d804fef0ed4aeded9ba8c6"
+
+  apiKey:
+    "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
+
+  authDomain:
+    "sase34-9cebc.firebaseapp.com",
+
+  projectId:
+    "sase34-9cebc",
+
+  storageBucket:
+    "sase34-9cebc.firebasestorage.app",
+
+  messagingSenderId:
+    "507211802803",
+
+  appId:
+    "1:507211802803:web:d804fef0ed4aeded9ba8c6"
+
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const db = firebase.firestore();
+
+let currentUser = null;
 
 
 /* =========================
@@ -987,6 +1108,7 @@ const db = firebase.firestore();
 ========================= */
 
 const horses = {
+
   1:{
     name:"オレンジスター",
     winrate:19
@@ -1011,9 +1133,67 @@ const horses = {
     name:"アサクサダッシュ",
     winrate:10
   }
+
 };
 
-let currentUser = null;
+
+/* =========================
+   JAPAN DATE
+========================= */
+
+/*
+  日本時間の日付を取得。
+  日付が変わると自動的に
+  別の投票場所へ切り替わる。
+*/
+
+function getJapanDate(){
+
+  const formatter =
+    new Intl.DateTimeFormat(
+      "ja-JP",
+      {
+        timeZone:"Asia/Tokyo",
+        year:"numeric",
+        month:"2-digit",
+        day:"2-digit"
+      }
+    );
+
+  const parts =
+    formatter.formatToParts(new Date());
+
+  const year =
+    parts.find(p=>p.type==="year").value;
+
+  const month =
+    parts.find(p=>p.type==="month").value;
+
+  const day =
+    parts.find(p=>p.type==="day").value;
+
+  return `${year}-${month}-${day}`;
+
+}
+
+
+/* =========================
+   CURRENT DAY PATH
+========================= */
+
+function getVotesCollection(){
+
+  const japanDate =
+    getJapanDate();
+
+  return db
+    .collection("races")
+    .doc("festival2026")
+    .collection("dailyVotes")
+    .doc(japanDate)
+    .collection("votes");
+
+}
 
 
 /* =========================
@@ -1022,14 +1202,22 @@ let currentUser = null;
 
 function showPage(page,button){
 
-  document.querySelectorAll(".page")
-    .forEach(p=>p.classList.remove("active"));
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.remove("active");
+    });
 
-  document.getElementById(page)
+  document
+    .getElementById(page)
     .classList.add("active");
 
-  document.querySelectorAll(".nav-btn")
-    .forEach(b=>b.classList.remove("active"));
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
 
   button.classList.add("active");
 
@@ -1045,29 +1233,46 @@ async function startFirebase(){
   try{
 
     if(!auth.currentUser){
+
       await auth.signInAnonymously();
+
     }
 
-    currentUser = auth.currentUser;
+    currentUser =
+      auth.currentUser;
 
-    document.getElementById("connection").textContent =
+
+    document
+      .getElementById("connection")
+      .textContent =
       "🟢 Firebase ONLINE";
 
-    document.getElementById("voteMessage").textContent =
-      "🟢 投票受付中";
+
+    document
+      .getElementById("voteMessage")
+      .textContent =
+      "🟢 本日の投票受付中";
+
 
     checkAlreadyVoted();
 
     listenRanking();
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(error);
 
-    document.getElementById("connection").textContent =
+    document
+      .getElementById("connection")
+      .textContent =
       "🔴 Firebase ERROR";
 
-    document.getElementById("voteMessage").textContent =
+
+    document
+      .getElementById("voteMessage")
+      .textContent =
       "⚠️ Firebaseに接続できません";
 
   }
@@ -1076,33 +1281,40 @@ async function startFirebase(){
 
 
 /* =========================
-   CHECK VOTE
+   CHECK TODAY'S VOTE
 ========================= */
 
 async function checkAlreadyVoted(){
 
   if(!currentUser)return;
 
+
   const ref =
-    db.collection("races")
-      .doc("festival2026")
-      .collection("votes_v2")
+    getVotesCollection()
       .doc(currentUser.uid);
+
 
   try{
 
-    const snap = await ref.get();
+    const snap =
+      await ref.get();
+
 
     if(snap.exists){
 
       disableVoteButtons();
 
-      document.getElementById("voteMessage").textContent =
-        "✅ 投票済みです！ランキングをチェックしてね🏆";
+
+      document
+        .getElementById("voteMessage")
+        .textContent =
+        "✅ 本日の投票は完了しています！🏆";
 
     }
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(error);
 
@@ -1119,25 +1331,31 @@ async function vote(horseId){
 
   if(!currentUser){
 
-    alert("まだ接続中です。少し待ってから投票してください。");
+    alert(
+      "まだ接続中です。少し待ってから投票してください。"
+    );
 
     return;
 
   }
 
+
   const ref =
-    db.collection("races")
-      .doc("festival2026")
-      .collection("votes_v2")
+    getVotesCollection()
       .doc(currentUser.uid);
+
 
   try{
 
-    const existing = await ref.get();
+    const existing =
+      await ref.get();
+
 
     if(existing.exists){
 
-      alert("この端末ではすでに投票済みです。");
+      alert(
+        "この端末では本日の投票はすでに完了しています。"
+      );
 
       disableVoteButtons();
 
@@ -1158,15 +1376,21 @@ async function vote(horseId){
 
     disableVoteButtons();
 
-    document.getElementById("voteMessage").textContent =
-      "🎉 投票ありがとうございました！ランキングを見てみよう🏆";
 
+    document
+      .getElementById("voteMessage")
+      .textContent =
+      "🎉 投票ありがとうございました！🏆";
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(error);
 
-    alert("投票に失敗しました。もう一度試してください。");
+    alert(
+      "投票に失敗しました。もう一度試してください。"
+    );
 
   }
 
@@ -1179,11 +1403,14 @@ async function vote(horseId){
 
 function disableVoteButtons(){
 
-  document.querySelectorAll(".vote-button")
+  document
+    .querySelectorAll(".vote-button")
     .forEach(button=>{
 
       button.disabled = true;
-      button.textContent = "投票済み";
+
+      button.textContent =
+        "投票済み";
 
     });
 
@@ -1197,9 +1424,7 @@ function disableVoteButtons(){
 function listenRanking(){
 
   const votesRef =
-    db.collection("races")
-      .doc("festival2026")
-      .collection("votes_v2");
+    getVotesCollection();
 
 
   votesRef.onSnapshot(
@@ -1207,19 +1432,24 @@ function listenRanking(){
     snapshot=>{
 
       const counts = {
+
         1:0,
         2:0,
         3:0,
         4:0,
         5:0
+
       };
 
 
       snapshot.forEach(doc=>{
 
-        const data = doc.data();
+        const data =
+          doc.data();
 
-        const id = String(data.horseId);
+        const id =
+          String(data.horseId);
+
 
         if(counts[id] !== undefined){
 
@@ -1234,17 +1464,21 @@ function listenRanking(){
 
     },
 
+
     error=>{
 
       console.error(error);
 
-      document.getElementById("rankingList").innerHTML = `
 
-        <div class="vote-message">
-          ⚠️ ランキングを読み込めませんでした
-        </div>
+      document
+        .getElementById("rankingList")
+        .innerHTML = `
 
-      `;
+          <div class="vote-message">
+            ⚠️ ランキングを読み込めませんでした
+          </div>
+
+        `;
 
     }
 
@@ -1266,11 +1500,16 @@ function renderRanking(counts){
 
 
   const maxVotes =
-    Math.max(...Object.values(counts),1);
+    Math.max(
+      ...Object.values(counts),
+      1
+    );
 
 
   const rankingList =
-    document.getElementById("rankingList");
+    document.getElementById(
+      "rankingList"
+    );
 
 
   rankingList.innerHTML = "";
@@ -1278,26 +1517,48 @@ function renderRanking(counts){
 
   sorted.forEach((id,index)=>{
 
-    const horse = horses[id];
+    const horse =
+      horses[id];
 
-    const votes = counts[id];
+
+    const votes =
+      counts[id];
+
 
     const percent =
-      Math.round((votes/maxVotes)*100);
+      Math.round(
+        (votes/maxVotes)*100
+      );
 
 
     let medal = "";
 
-    if(index===0) medal="🥇";
-    else if(index===1) medal="🥈";
-    else if(index===2) medal="🥉";
-    else medal="";
+
+    if(index===0){
+
+      medal="🥇";
+
+    }
+
+    else if(index===1){
+
+      medal="🥈";
+
+    }
+
+    else if(index===2){
+
+      medal="🥉";
+
+    }
 
 
     const card =
       document.createElement("div");
 
-    card.className = "rank-card";
+
+    card.className =
+      "rank-card";
 
 
     card.innerHTML = `
@@ -1311,10 +1572,12 @@ function renderRanking(counts){
         ${id}. ${horse.name}
 
         <div class="rank-bar">
+
           <div
             class="rank-bar-fill"
             style="width:${percent}%"
           ></div>
+
         </div>
 
       </div>
