@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>文化祭 GRAND FESTIVAL</title>
+  <title>させ34‼️ | FESTIVAL RACE</title>
 
   <style>
     * {
@@ -14,59 +14,101 @@
     body {
       margin: 0;
       font-family:
-        -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-        "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-      background: #f4f1e8;
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+      background: #eeeae0;
       color: #173d32;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     header {
-      background: linear-gradient(135deg, #103f32, #1c604d);
+      background:
+        linear-gradient(
+          135deg,
+          #0c352a 0%,
+          #14513d 55%,
+          #0b3026 100%
+        );
       color: white;
-      padding: 28px 20px;
       text-align: center;
-      border-bottom: 5px solid #c8a84e;
+      padding: 25px 15px 20px;
+      border-bottom: 5px solid #c9a64b;
+      position: relative;
+      overflow: hidden;
     }
 
-    .school-name {
+    header::before {
+      content: "♞";
+      position: absolute;
+      left: 7%;
+      bottom: -20px;
+      font-size: 110px;
+      opacity: .08;
+    }
+
+    header::after {
+      content: "♞";
+      position: absolute;
+      right: 7%;
+      bottom: -20px;
+      font-size: 110px;
+      opacity: .08;
+    }
+
+    .festival-label {
+      font-size: 12px;
+      letter-spacing: 4px;
+      opacity: .8;
+      margin-bottom: 5px;
+    }
+
+    .logo {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0;
+      text-shadow: 0 3px 0 rgba(0,0,0,.2);
+    }
+
+    .race-title {
+      margin-top: 4px;
       font-size: 13px;
       letter-spacing: 3px;
-      opacity: .85;
-      margin-bottom: 8px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 30px;
-      letter-spacing: 2px;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      font-size: 13px;
       opacity: .9;
     }
 
+    /* =========================
+       NAV
+    ========================= */
+
     nav {
+      background: #fff;
       display: flex;
       justify-content: center;
       gap: 8px;
-      background: white;
-      padding: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      padding: 11px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.08);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
     }
 
     nav button {
       border: none;
-      background: #edf2ee;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background: #edf0eb;
       color: #173d32;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-weight: bold;
+      font-weight: 800;
       cursor: pointer;
+      font-size: 13px;
     }
 
     nav button.active {
@@ -74,115 +116,246 @@
       color: white;
     }
 
+    /* =========================
+       MAIN
+    ========================= */
+
     main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 25px 16px 60px;
+      max-width: 950px;
+      margin: auto;
+      padding: 22px 15px 60px;
     }
 
-    .hero {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    /* =========================
+       RACE BOARD
+    ========================= */
+
+    .race-board {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,.1);
+      margin-bottom: 18px;
+    }
+
+    .race-top {
+      background: #173d32;
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .race-number {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .live {
+      background: #b52a2a;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .race-main {
+      padding: 20px;
       text-align: center;
     }
 
-    .status {
-      display: inline-block;
-      background: #e8f3ec;
-      color: #17613e;
-      padding: 7px 15px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: bold;
-      margin-bottom: 12px;
+    .horse-icon {
+      font-size: 60px;
+      line-height: 1;
+      margin-bottom: 8px;
     }
 
-    .hero h2 {
-      margin: 5px 0 8px;
-      font-size: 24px;
-    }
-
-    .hero p {
+    .race-main h2 {
       margin: 0;
-      color: #66736e;
-      font-size: 14px;
+      font-size: 25px;
+      letter-spacing: 1px;
     }
 
-    .notice {
-      margin-top: 18px;
-      padding: 12px;
-      background: #faf6df;
-      border-left: 4px solid #c8a84e;
-      text-align: left;
+    .race-main p {
+      color: #727a76;
+      margin: 7px 0 0;
       font-size: 13px;
     }
 
-    .candidates {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+    .race-status {
+      display: inline-block;
+      margin-top: 14px;
+      background: #f5edcf;
+      color: #856918;
+      padding: 8px 15px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 900;
     }
 
-    .candidate {
-      background: white;
-      border: 2px solid transparent;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.07);
-      transition: .2s;
+    /* =========================
+       TRACK
+    ========================= */
+
+    .track {
+      margin: 18px 0;
+      height: 95px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          #438258 0px,
+          #438258 12px,
+          #3b7850 12px,
+          #3b7850 24px
+        );
+      border: 5px solid #f7f7f2;
+      box-shadow: inset 0 0 0 2px #c9a64b;
     }
 
-    .candidate:hover {
-      transform: translateY(-2px);
+    .track-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      border-top: 3px dashed rgba(255,255,255,.65);
     }
 
-    .candidate.selected {
-      border-color: #c8a84e;
-      box-shadow: 0 5px 20px rgba(200,168,78,.25);
+    .horse-run {
+      position: absolute;
+      top: 22px;
+      left: 7%;
+      font-size: 45px;
+      animation: moveHorse 3s ease-in-out infinite alternate;
     }
 
-    .number {
-      display: inline-flex;
-      width: 38px;
-      height: 38px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
+    @keyframes moveHorse {
+      from {
+        left: 7%;
+      }
+
+      to {
+        left: 76%;
+      }
+    }
+
+    .finish {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: repeating-linear-gradient(
+        45deg,
+        white 0,
+        white 8px,
+        #222 8px,
+        #222 16px
+      );
+    }
+
+    /* =========================
+       ENTRY TABLE
+    ========================= */
+
+    .section-title {
       background: #173d32;
       color: white;
-      font-weight: bold;
-      margin-bottom: 12px;
+      padding: 13px 16px;
+      border-radius: 6px 6px 0 0;
+      font-weight: 900;
+      letter-spacing: 1px;
     }
 
-    .candidate h3 {
-      margin: 0 0 5px;
-      font-size: 20px;
+    .entry-list {
+      background: white;
+      border-radius: 0 0 6px 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+      margin-bottom: 20px;
     }
 
-    .candidate p {
-      color: #68736f;
-      font-size: 13px;
-      margin: 0 0 15px;
+    .entry {
+      display: grid;
+      grid-template-columns: 55px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border-bottom: 1px solid #e6e6e0;
+    }
+
+    .entry:last-child {
+      border-bottom: none;
+    }
+
+    .gate {
+      width: 45px;
+      height: 45px;
+      border-radius: 5px;
+      background: #f0f0e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 900;
+      border: 2px solid #d6d5c9;
+    }
+
+    .entry-name {
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .entry-description {
+      color: #7a817d;
+      font-size: 12px;
+      margin-top: 3px;
     }
 
     .vote-button {
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      padding: 12px;
-      background: #c8a84e;
+      background: #c9a64b;
       color: #173d32;
-      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 15px;
+      font-weight: 900;
       cursor: pointer;
-      font-size: 14px;
+      white-space: nowrap;
     }
 
     .vote-button:hover {
-      filter: brightness(.95);
+      filter: brightness(.94);
     }
+
+    .vote-button:disabled {
+      background: #c8cbc7;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       NOTICE
+    ========================= */
+
+    .notice {
+      background: #fff;
+      border-left: 5px solid #c9a64b;
+      padding: 14px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #626b66;
+      margin-bottom: 20px;
+    }
+
+    /* =========================
+       RANKING
+    ========================= */
 
     .ranking {
       display: none;
@@ -192,61 +365,90 @@
       display: block;
     }
 
-    .rank-item {
+    .rank-card {
+      background: white;
+      margin-bottom: 10px;
+      padding: 16px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       gap: 14px;
-      background: white;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,.06);
+      box-shadow: 0 3px 10px rgba(0,0,0,.07);
     }
 
     .rank-number {
-      font-size: 22px;
-      font-weight: bold;
-      width: 35px;
+      width: 42px;
+      font-size: 25px;
+      font-weight: 900;
       text-align: center;
     }
 
-    .rank-name {
+    .rank-horse {
+      font-size: 30px;
+    }
+
+    .rank-info {
       flex: 1;
-      font-weight: bold;
+    }
+
+    .rank-name {
+      font-weight: 900;
+      font-size: 16px;
     }
 
     .rank-votes {
-      font-weight: bold;
-      color: #b18b20;
+      font-size: 13px;
+      color: #9a7920;
+      font-weight: 900;
+      margin-top: 3px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      background: #173d32;
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 11px;
+      letter-spacing: 1px;
     }
 
     .hidden {
       display: none !important;
     }
 
-    footer {
-      text-align: center;
-      color: #78817d;
-      font-size: 12px;
-      padding: 25px;
-    }
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 650px) {
-      h1 {
-        font-size: 24px;
+
+      .logo {
+        font-size: 34px;
       }
 
-      .candidates {
-        grid-template-columns: 1fr;
+      .race-main h2 {
+        font-size: 21px;
+      }
+
+      .entry {
+        grid-template-columns: 48px 1fr;
+      }
+
+      .vote-button {
+        grid-column: 2;
+        width: 100%;
+      }
+
+      .horse-run {
+        font-size: 38px;
       }
 
       nav button {
         padding: 9px 13px;
-        font-size: 12px;
-      }
-
-      main {
-        padding-top: 18px;
       }
     }
   </style>
@@ -254,88 +456,274 @@
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
-  <div class="school-name">SCHOOL FESTIVAL 2026</div>
-  <h1>GRAND FESTIVAL</h1>
-  <div class="subtitle">CULTURAL FESTIVAL SPECIAL EVENT</div>
+
+  <div class="festival-label">
+    SCHOOL FESTIVAL 2026
+  </div>
+
+  <h1 class="logo">
+    🐎 させ34‼️
+  </h1>
+
+  <div class="race-title">
+    SASE34 FESTIVAL RACE
+  </div>
+
 </header>
 
+
+<!-- =========================
+     NAV
+========================= -->
+
 <nav>
-  <button id="voteNav" class="active">投票</button>
-  <button id="rankingNav">人気ランキング</button>
+
+  <button id="voteNav" class="active">
+    🏇 出走表・投票
+  </button>
+
+  <button id="rankingNav">
+    📊 人気ランキング
+  </button>
+
 </nav>
+
 
 <main>
 
-  <!-- 投票画面 -->
+  <!-- =========================
+       VOTE VIEW
+  ========================= -->
+
   <section id="voteView">
 
-    <div class="hero">
-      <div class="status">● 投票受付中</div>
-      <h2>あなたの一票で決めよう！</h2>
-      <p>文化祭スペシャル企画 人気投票</p>
+    <div class="race-board">
 
-      <div class="notice">
-        ※この投票は文化祭内で行う無料の人気投票です。
-        お金を賭けたり、賞金を受け取ったりするものではありません。
-      </div>
-    </div>
+      <div class="race-top">
 
-    <div class="candidates">
+        <div class="race-number">
+          第34回 文化祭記念
+        </div>
 
-      <div class="candidate" data-name="エントリー 1">
-        <div class="number">01</div>
-        <h3>エントリー 1</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
+        <div class="live">
+          ● LIVE
+        </div>
+
       </div>
 
-      <div class="candidate" data-name="エントリー 2">
-        <div class="number">02</div>
-        <h3>エントリー 2</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
-      </div>
+      <div class="race-main">
 
-      <div class="candidate" data-name="エントリー 3">
-        <div class="number">03</div>
-        <h3>エントリー 3</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
-      </div>
+        <div class="horse-icon">
+          🐎
+        </div>
 
-      <div class="candidate" data-name="エントリー 4">
-        <div class="number">04</div>
-        <h3>エントリー 4</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
-      </div>
+        <h2>
+          させ34‼️ スペシャルレース
+        </h2>
 
-      <div class="candidate" data-name="エントリー 5">
-        <div class="number">05</div>
-        <h3>エントリー 5</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
-      </div>
+        <p>
+          SCHOOL FESTIVAL SPECIAL EVENT
+        </p>
 
-      <div class="candidate" data-name="エントリー 6">
-        <div class="number">06</div>
-        <h3>エントリー 6</h3>
-        <p>あなたが応援したい参加者</p>
-        <button class="vote-button">この参加者に投票</button>
+        <div class="race-status">
+          ● 投票受付中
+        </div>
+
       </div>
 
     </div>
+
+
+    <!-- TRACK -->
+
+    <div class="track">
+
+      <div class="track-line"></div>
+
+      <div class="horse-run">
+        🐎
+      </div>
+
+      <div class="finish"></div>
+
+    </div>
+
+
+    <!-- NOTICE -->
+
+    <div class="notice">
+
+      <strong>📢 投票について</strong><br>
+
+      あなたが応援したい参加者を1名選んで投票してください。<br>
+
+      ※この企画は文化祭内で行う無料の人気投票です。
+      お金を賭けたり、賞金を受け取ったりするものではありません。
+
+    </div>
+
+
+    <!-- ENTRY LIST -->
+
+    <div class="section-title">
+      🏇 出 走 表
+    </div>
+
+    <div class="entry-list">
+
+      <div class="entry">
+        <div class="gate">01</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 1
+          </div>
+          <div class="entry-description">
+            No.01 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+
+      <div class="entry">
+        <div class="gate">02</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 2
+          </div>
+          <div class="entry-description">
+            No.02 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+
+      <div class="entry">
+        <div class="gate">03</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 3
+          </div>
+          <div class="entry-description">
+            No.03 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+
+      <div class="entry">
+        <div class="gate">04</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 4
+          </div>
+          <div class="entry-description">
+            No.04 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+
+      <div class="entry">
+        <div class="gate">05</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 5
+          </div>
+          <div class="entry-description">
+            No.05 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+
+      <div class="entry">
+        <div class="gate">06</div>
+
+        <div>
+          <div class="entry-name">
+            エントリー 6
+          </div>
+          <div class="entry-description">
+            No.06 / FESTIVAL ENTRY
+          </div>
+        </div>
+
+        <button class="vote-button">
+          この参加者に投票
+        </button>
+      </div>
+
+    </div>
+
   </section>
 
 
-  <!-- ランキング画面 -->
+  <!-- =========================
+       RANKING VIEW
+  ========================= -->
+
   <section id="rankingView" class="ranking">
 
-    <div class="hero">
-      <div class="status">LIVE RANKING</div>
-      <h2>人気ランキング</h2>
-      <p>現在の投票状況</p>
+    <div class="race-board">
+
+      <div class="race-top">
+
+        <div class="race-number">
+          現在の人気ランキング
+        </div>
+
+        <div class="live">
+          LIVE
+        </div>
+
+      </div>
+
+      <div class="race-main">
+
+        <div class="horse-icon">
+          🏆
+        </div>
+
+        <h2>
+          人気ランキング
+        </h2>
+
+        <p>
+          CURRENT FESTIVAL RANKING
+        </p>
+
+      </div>
+
     </div>
 
     <div id="rankingList"></div>
@@ -344,13 +732,21 @@
 
 </main>
 
+
 <footer>
-  SCHOOL FESTIVAL 2026<br>
+
+  🐎 SASE34 FESTIVAL 2026<br>
   FREE FESTIVAL VOTE
+
 </footer>
 
 
 <script>
+
+  /* =========================
+     CANDIDATES
+  ========================= */
+
   const candidates = [
     "エントリー 1",
     "エントリー 2",
@@ -360,91 +756,213 @@
     "エントリー 6"
   ];
 
+
+  /* =========================
+     VOTE DATA
+  ========================= */
+
   let votes = {};
 
   candidates.forEach(name => {
     votes[name] = 0;
   });
 
-  const voteNav = document.getElementById("voteNav");
-  const rankingNav = document.getElementById("rankingNav");
-  const voteView = document.getElementById("voteView");
-  const rankingView = document.getElementById("rankingView");
-  const rankingList = document.getElementById("rankingList");
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const voteNav =
+    document.getElementById("voteNav");
+
+  const rankingNav =
+    document.getElementById("rankingNav");
+
+  const voteView =
+    document.getElementById("voteView");
+
+  const rankingView =
+    document.getElementById("rankingView");
+
+  const rankingList =
+    document.getElementById("rankingList");
+
+
+  /* =========================
+     VIEW SWITCH
+  ========================= */
 
   function showVote() {
+
     voteView.classList.remove("hidden");
+
     rankingView.classList.remove("show");
 
     voteNav.classList.add("active");
+
     rankingNav.classList.remove("active");
+
   }
 
+
   function showRanking() {
+
     voteView.classList.add("hidden");
+
     rankingView.classList.add("show");
 
     voteNav.classList.remove("active");
+
     rankingNav.classList.add("active");
 
     renderRanking();
+
   }
 
+
+  /* =========================
+     RANKING
+  ========================= */
+
   function renderRanking() {
-    const sorted = [...candidates].sort(
-      (a, b) => votes[b] - votes[a]
-    );
+
+    const sorted =
+      [...candidates].sort(
+        (a, b) => votes[b] - votes[a]
+      );
 
     rankingList.innerHTML = "";
 
     sorted.forEach((name, index) => {
-      const item = document.createElement("div");
-      item.className = "rank-item";
 
-      item.innerHTML = `
-        <div class="rank-number">${index + 1}</div>
-        <div class="rank-name">${name}</div>
-        <div class="rank-votes">${votes[name]}票</div>
+      const card =
+        document.createElement("div");
+
+      card.className = "rank-card";
+
+      card.innerHTML = `
+
+        <div class="rank-number">
+          ${index + 1}
+        </div>
+
+        <div class="rank-horse">
+          🐎
+        </div>
+
+        <div class="rank-info">
+
+          <div class="rank-name">
+            ${name}
+          </div>
+
+          <div class="rank-votes">
+            ${votes[name]}票
+          </div>
+
+        </div>
       `;
 
-      rankingList.appendChild(item);
+      rankingList.appendChild(card);
+
     });
+
   }
 
-  document.querySelectorAll(".vote-button").forEach(button => {
 
-    button.addEventListener("click", () => {
+  /* =========================
+     VOTING
+  ========================= */
 
-      const card = button.closest(".candidate");
-      const name = card.dataset.name;
+  document
+    .querySelectorAll(".vote-button")
+    .forEach(button => {
 
-      if (localStorage.getItem("festivalVoteDone")) {
-        alert("すでに投票済みです！");
-        return;
-      }
+      button.addEventListener(
+        "click",
+        () => {
 
-      votes[name]++;
+          const entry =
+            button.closest(".entry");
 
-      localStorage.setItem("festivalVoteDone", "true");
+          const name =
+            entry.querySelector(
+              ".entry-name"
+            ).textContent.trim();
 
-      document.querySelectorAll(".vote-button").forEach(btn => {
-        btn.disabled = true;
-        btn.textContent = "投票済み";
-      });
+          if (
+            localStorage.getItem(
+              "sase34VoteDone"
+            )
+          ) {
 
-      card.classList.add("selected");
+            alert(
+              "すでに投票済みです！"
+            );
 
-      alert(`${name} に投票しました！`);
+            return;
+          }
 
-      renderRanking();
+
+          votes[name]++;
+
+
+          localStorage.setItem(
+            "sase34VoteDone",
+            "true"
+          );
+
+
+          document
+            .querySelectorAll(".vote-button")
+            .forEach(btn => {
+
+              btn.disabled = true;
+
+              btn.textContent =
+                "投票済み";
+
+            });
+
+
+          entry.style.background =
+            "#faf6df";
+
+
+          alert(
+            `${name} に投票しました！`
+          );
+
+
+          renderRanking();
+
+        }
+      );
+
     });
 
-  });
 
-  voteNav.addEventListener("click", showVote);
-  rankingNav.addEventListener("click", showRanking);
+  /* =========================
+     NAV EVENTS
+  ========================= */
+
+  voteNav.addEventListener(
+    "click",
+    showVote
+  );
+
+  rankingNav.addEventListener(
+    "click",
+    showRanking
+  );
+
+
+  /* =========================
+     INITIAL RENDER
+  ========================= */
 
   renderRanking();
+
 </script>
 
 </body>
