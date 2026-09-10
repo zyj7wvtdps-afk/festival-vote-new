@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DOKKYO RACE</title>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -10,24 +11,27 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
 
 body{
   margin:0;
-  font-family:Arial,"Noto Sans JP",sans-serif;
   color:#fff;
+  font-family:Arial,"Noto Sans JP",sans-serif;
   background:
-    radial-gradient(circle at top,#19703b 0%,#073a20 38%,#01150a 100%);
+    radial-gradient(circle at top,#1b743e 0%,#073b20 40%,#01150a 100%);
   min-height:100vh;
 }
 
+/* HEADER */
+
 .header{
-  background:linear-gradient(180deg,#142d1d,#06140c);
-  border-bottom:4px solid #d7b348;
   text-align:center;
-  padding:16px 12px 13px;
+  padding:15px 10px 13px;
+  background:linear-gradient(180deg,#142d1c,#06140c);
+  border-bottom:4px solid #d8b64c;
   box-shadow:0 5px 20px #0009;
 }
 
@@ -47,12 +51,12 @@ body{
   width:9px;
   height:9px;
   border-radius:50%;
-  background:#ff1717;
+  background:#ff1515;
   box-shadow:0 0 10px red;
-  animation:liveblink 1s infinite;
+  animation:blink 1s infinite;
 }
 
-@keyframes liveblink{
+@keyframes blink{
   0%,45%{opacity:1}
   50%,100%{opacity:.2}
 }
@@ -62,16 +66,16 @@ body{
   font-size:42px;
   font-weight:1000;
   letter-spacing:4px;
-  color:#f3d568;
+  color:#f5d86b;
   text-shadow:
-    0 2px 0 #765800,
-    0 0 16px #ffd84d77;
+    0 2px 0 #765900,
+    0 0 17px #ffd84d77;
 }
 
 .subtitle{
-  margin-top:3px;
-  color:#ddd;
   font-size:14px;
+  color:#ddd;
+  margin-top:3px;
 }
 
 .status{
@@ -84,39 +88,81 @@ body{
   font-size:11px;
 }
 
+/* NAV */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#06140b;
+  border-bottom:2px solid #5e6d42;
+  box-shadow:0 4px 12px #0008;
+}
+
+.nav button{
+  border:0;
+  border-right:1px solid #29432e;
+  background:#0a1d10;
+  color:#aebaae;
+  padding:12px 4px;
+  font-size:11px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.nav button:last-child{
+  border-right:0;
+}
+
+.nav button.active{
+  background:linear-gradient(180deg,#876d23,#514314);
+  color:#fff;
+  box-shadow:inset 0 -3px #ffe16a;
+}
+
+/* MAIN */
+
 .main{
   width:100%;
   max-width:1000px;
   margin:auto;
-  padding:16px 10px 40px;
+  padding:15px 10px 40px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
 }
 
 .notice{
   text-align:center;
   background:linear-gradient(90deg,#741d13,#b63d18,#741d13);
-  border:2px solid #e5bb4b;
+  border:2px solid #e6bd4e;
   border-radius:9px;
   padding:9px;
   font-size:13px;
   font-weight:bold;
   box-shadow:0 4px 15px #0008;
+  margin-bottom:14px;
 }
 
-/* =========================
-   出走馬
-========================= */
-
 .section-title{
-  margin-top:16px;
-  background:linear-gradient(90deg,#182c1d,#09160d);
-  border-left:5px solid #dfba4a;
+  background:linear-gradient(90deg,#182d1d,#08170d);
+  border-left:5px solid #dfba4b;
   padding:10px 12px;
   font-size:18px;
   font-weight:1000;
+  margin-bottom:9px;
 }
 
+/* HORSES */
+
 .horse-board{
-  margin-top:8px;
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:7px;
@@ -124,18 +170,17 @@ body{
 
 .horse-card{
   position:relative;
-  min-width:0;
-  background:
-    linear-gradient(180deg,#174b29,#082416);
+  overflow:hidden;
+  background:linear-gradient(180deg,#174d2a,#082416);
   border:1px solid #4c7655;
   border-radius:9px;
-  overflow:hidden;
   box-shadow:0 5px 15px #0008;
   padding-bottom:10px;
 }
 
 .horse-number{
   position:absolute;
+  z-index:5;
   top:7px;
   left:7px;
   width:28px;
@@ -146,30 +191,28 @@ body{
   align-items:center;
   font-weight:1000;
   color:#111;
-  z-index:5;
 }
 
 .n1{background:#fff}
 .n2{background:#111;color:#fff}
-.n3{background:#e63c3c;color:#fff}
+.n3{background:#e33;color:#fff}
 .n4{background:#4388ef;color:#fff}
-.n5{background:#f2dc3d}
+.n5{background:#f1dc3d}
 
 .horse-picture{
-  height:110px;
   position:relative;
+  height:115px;
   overflow:hidden;
-  background:
-    linear-gradient(180deg,#1e6035,#0b301a);
+  background:linear-gradient(180deg,#236a3a,#0b301a);
   border-bottom:1px solid #446b4d;
 }
 
 .big-horse{
   position:absolute;
-  left:-55px;
-  bottom:3px;
-  font-size:52px;
-  animation:horseRun 4.7s linear infinite;
+  left:-65px;
+  bottom:2px;
+  font-size:53px;
+  animation:run 4.8s linear infinite;
   filter:drop-shadow(0 3px 2px #0009);
 }
 
@@ -194,13 +237,13 @@ body{
   animation-delay:-4s;
 }
 
-@keyframes horseRun{
+@keyframes run{
   0%{left:-65px}
   100%{left:calc(100% + 10px)}
 }
 
 .horse-name{
-  padding:8px 5px 2px;
+  padding:8px 4px 2px;
   text-align:center;
   font-size:14px;
   font-weight:1000;
@@ -211,66 +254,52 @@ body{
 
 .entry{
   text-align:center;
+  color:#91ad98;
   font-size:9px;
-  color:#94b39b;
 }
 
 .win{
   margin:7px 8px 0;
-  padding:6px 4px;
+  padding:6px 3px;
+  text-align:center;
   background:#06150b;
   border:1px solid #385b40;
   border-radius:6px;
-  text-align:center;
 }
 
 .win-label{
   display:block;
-  font-size:9px;
   color:#bbb;
+  font-size:9px;
 }
 
 .win-rate{
   display:block;
-  font-size:25px;
-  line-height:1;
-  font-weight:1000;
   color:#ffdc50;
-  text-shadow:0 0 8px #ffd84d66;
+  font-size:25px;
+  font-weight:1000;
 }
 
-/* =========================
-   ランキング
-========================= */
+/* RANKING */
 
 .ranking-box{
-  margin-top:9px;
   background:linear-gradient(135deg,#12351f,#07190e);
   border:1px solid #4c7655;
   border-radius:10px;
-  padding:12px;
+  padding:10px;
   box-shadow:0 5px 17px #0008;
-}
-
-.ranking-header{
-  display:grid;
-  grid-template-columns:55px 1fr 100px;
-  padding:7px 5px;
-  color:#aebdb1;
-  font-size:11px;
-  border-bottom:1px solid #315238;
 }
 
 .rank-row{
   display:grid;
-  grid-template-columns:55px 1fr 100px;
+  grid-template-columns:50px 1fr 80px;
   align-items:center;
-  min-height:48px;
+  min-height:55px;
   border-bottom:1px solid #203e29;
 }
 
 .rank-row:last-child{
-  border-bottom:none;
+  border-bottom:0;
 }
 
 .rank-position{
@@ -286,17 +315,17 @@ body{
 .rank-rate{
   text-align:right;
   color:#ffd84d;
-  font-size:20px;
+  font-size:21px;
   font-weight:1000;
 }
 
 .rank-bar{
   grid-column:2 / 4;
   height:5px;
+  margin:0 0 7px;
   background:#06130a;
   border-radius:10px;
   overflow:hidden;
-  margin:0 0 7px;
 }
 
 .rank-bar-inner{
@@ -304,55 +333,56 @@ body{
   background:linear-gradient(90deg,#b68c24,#ffe77b);
 }
 
-/* =========================
-   投票
-========================= */
+/* VOTE */
 
-.vote-grid{
-  margin-top:9px;
+.vote-box{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:7px;
+  gap:9px;
 }
 
 .vote-card{
-  background:#0b2113;
-  border:1px solid #3e6548;
-  border-radius:8px;
-  padding:9px 5px;
-  text-align:center;
+  display:grid;
+  grid-template-columns:45px 1fr 90px;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg,#12351f,#07190e);
+  border:1px solid #41684a;
+  border-radius:9px;
+  padding:10px;
+}
+
+.vote-number{
+  width:36px;
+  height:36px;
+  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#111;
+  font-weight:1000;
 }
 
 .vote-name{
-  font-size:12px;
-  font-weight:bold;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-weight:1000;
+  font-size:15px;
 }
 
-.vote-count{
-  margin:5px 0;
-  color:#ddd;
-  font-size:12px;
+.vote-sub{
+  color:#91ad98;
+  font-size:10px;
+  margin-top:2px;
 }
 
 .vote-button{
-  width:100%;
   border:0;
   border-radius:6px;
-  padding:8px 3px;
+  padding:9px 5px;
   background:linear-gradient(180deg,#ffe477,#d2a331);
   color:#111;
   font-size:11px;
   font-weight:1000;
   cursor:pointer;
   box-shadow:0 3px 0 #725615;
-}
-
-.vote-button:active{
-  transform:translateY(2px);
-  box-shadow:0 1px 0 #725615;
 }
 
 .vote-button:disabled{
@@ -364,11 +394,77 @@ body{
   display:none;
   margin-top:10px;
   text-align:center;
-  padding:10px;
+  padding:11px;
   background:#173d22;
   border:1px solid #4f895b;
   border-radius:8px;
   font-weight:bold;
+}
+
+/* RESULTS */
+
+.total{
+  text-align:center;
+  padding:14px;
+  background:#0a2112;
+  border:1px solid #426b4c;
+  border-radius:9px;
+  margin-bottom:10px;
+}
+
+.total-label{
+  color:#aaa;
+  font-size:12px;
+}
+
+.total-number{
+  font-size:32px;
+  font-weight:1000;
+  color:#ffd84d;
+}
+
+.result-row{
+  display:grid;
+  grid-template-columns:50px 1fr 90px;
+  align-items:center;
+  gap:10px;
+  background:#0b2113;
+  border:1px solid #365b40;
+  border-radius:8px;
+  padding:10px;
+  margin-bottom:7px;
+}
+
+.result-rank{
+  text-align:center;
+  font-size:22px;
+  font-weight:1000;
+}
+
+.result-name{
+  font-weight:bold;
+}
+
+.result-votes{
+  text-align:right;
+  color:#ffd84d;
+  font-weight:1000;
+  font-size:18px;
+}
+
+.result-bar{
+  grid-column:2 / 4;
+  height:8px;
+  background:#06130a;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.result-bar-inner{
+  height:100%;
+  background:linear-gradient(90deg,#a67e24,#ffe477);
+  width:0%;
+  transition:width .5s;
 }
 
 .error{
@@ -385,11 +481,13 @@ body{
 
 .footer{
   text-align:center;
-  margin-top:22px;
+  margin-top:25px;
   color:#78927f;
   font-size:10px;
   line-height:1.7;
 }
+
+/* MOBILE */
 
 @media(max-width:700px){
 
@@ -401,31 +499,32 @@ body{
   .horse-board{
     grid-template-columns:repeat(5,150px);
     overflow-x:auto;
-    padding-bottom:7px;
+    padding-bottom:8px;
   }
 
   .horse-card{
     width:150px;
   }
 
-  .vote-grid{
-    grid-template-columns:repeat(2,1fr);
+  .nav button{
+    font-size:10px;
+    padding:11px 2px;
   }
 
-  .ranking-header,
-  .rank-row{
-    grid-template-columns:45px 1fr 70px;
+  .vote-card{
+    grid-template-columns:40px 1fr 85px;
   }
 
-  .main{
-    padding-left:8px;
-    padding-right:8px;
-  }
 }
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- HEADER -->
 
 <header class="header">
 
@@ -449,23 +548,82 @@ body{
 </header>
 
 
+<!-- NAV -->
+
+<nav class="nav">
+
+  <button
+    id="nav-horses"
+    class="active"
+    onclick="showPage('horses')"
+  >
+    🏇<br>出走馬
+  </button>
+
+  <button
+    id="nav-win"
+    onclick="showPage('win')"
+  >
+    📊<br>勝率
+  </button>
+
+  <button
+    id="nav-vote"
+    onclick="showPage('vote')"
+  >
+    🎫<br>投票
+  </button>
+
+  <button
+    id="nav-result"
+    onclick="showPage('result')"
+  >
+    📈<br>投票結果
+  </button>
+
+</nav>
+
+
 <main class="main">
 
+
+<!-- =========================
+     PAGE 1 出走馬
+========================= -->
+
+<section
+  id="page-horses"
+  class="page active"
+>
+
   <div class="notice">
-    🏇 お金を使わない無料の人気投票です。1端末につき1票まで投票できます。
+    🏇 DOKKYO RACE 学園祭スペシャル
   </div>
-
-
-  <!-- 出走馬 -->
 
   <div class="section-title">
     🏇 出走馬
   </div>
 
-  <div class="horse-board" id="horseBoard"></div>
+  <div
+    class="horse-board"
+    id="horseBoard"
+  ></div>
+
+</section>
 
 
-  <!-- 勝率ランキング -->
+<!-- =========================
+     PAGE 2 勝率
+========================= -->
+
+<section
+  id="page-win"
+  class="page"
+>
+
+  <div class="notice">
+    📊 DOKKYO RACE 勝率ランキング
+  </div>
 
   <div class="section-title">
     📊 勝率ランキング
@@ -473,43 +631,110 @@ body{
 
   <div class="ranking-box">
 
-    <div class="ranking-header">
-      <div>順位</div>
-      <div>エントリー</div>
-      <div style="text-align:right">勝率</div>
-    </div>
-
     <div id="ranking"></div>
 
   </div>
 
-
-  <!-- 投票 -->
-
-  <div class="section-title">
-    🎫 みんなの投票
-  </div>
-
-  <div class="vote-grid" id="voteGrid"></div>
-
-  <div class="my-vote" id="myVote"></div>
-
-  <div class="error" id="errorBox"></div>
-
-
   <div class="footer">
-    DOKKYO RACE / SCHOOL FESTIVAL SPECIAL<br>
     ※勝率は演出用の固定表示です。投票結果とは連動しません。
   </div>
+
+</section>
+
+
+<!-- =========================
+     PAGE 3 投票
+========================= -->
+
+<section
+  id="page-vote"
+  class="page"
+>
+
+  <div class="notice">
+    🎫 お金を使わない無料の人気投票です。1端末につき1票まで。
+  </div>
+
+  <div class="section-title">
+    🎫 エントリーを選択
+  </div>
+
+  <div
+    class="vote-box"
+    id="voteBox"
+  ></div>
+
+  <div
+    class="my-vote"
+    id="myVote"
+  ></div>
+
+  <div
+    class="error"
+    id="errorBox"
+  ></div>
+
+</section>
+
+
+<!-- =========================
+     PAGE 4 投票結果
+========================= -->
+
+<section
+  id="page-result"
+  class="page"
+>
+
+  <div class="notice">
+    📈 現在の投票状況
+  </div>
+
+  <div class="total">
+
+    <div class="total-label">
+      TOTAL VOTES
+    </div>
+
+    <div
+      class="total-number"
+      id="totalVotes"
+    >
+      0
+    </div>
+
+    <div class="total-label">
+      票
+    </div>
+
+  </div>
+
+  <div class="section-title">
+    📈 投票結果ランキング
+  </div>
+
+  <div id="results"></div>
+
+</section>
+
+
+<div class="footer">
+
+  DOKKYO RACE / SCHOOL FESTIVAL SPECIAL<br>
+
+  ※文化祭で実施する無料の人気投票です。
+
+</div>
+
 
 </main>
 
 
 <script>
 
-/* ========================================
+/* ==========================================
    Firebase
-======================================== */
+========================================== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyDq54jr0rMRmc--F1ZEPqa9cyMbtGmFkUQ",
@@ -526,11 +751,49 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-/* ========================================
+/* ==========================================
    出走馬
-======================================== */
+   ★ 表示順はあえてバラバラ
+========================================== */
 
 const horses = [
+
+  {
+    id:"3",
+    name:"グリーンフラッシュ",
+    win:19
+  },
+
+  {
+    id:"1",
+    name:"オレンジスター",
+    win:32
+  },
+
+  {
+    id:"5",
+    name:"アサクサダッシュ",
+    win:10
+  },
+
+  {
+    id:"2",
+    name:"ロイヤルポニー",
+    win:25
+  },
+
+  {
+    id:"4",
+    name:"ビッくらサンダー",
+    win:14
+  }
+
+];
+
+
+/* 勝率ランキング用 */
+
+const winRanking = [
 
   {
     id:"1",
@@ -570,9 +833,45 @@ let votes = {};
 let myVote = null;
 
 
-/* ========================================
-   出走馬カード
-======================================== */
+/* ==========================================
+   ページ切り替え
+========================================== */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .getElementById("page-"+page)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(el=>{
+      el.classList.remove("active");
+    });
+
+  document
+    .getElementById("nav-"+page)
+    .classList.add("active");
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* ==========================================
+   出走馬
+========================================== */
 
 function renderHorses(){
 
@@ -581,7 +880,7 @@ function renderHorses(){
 
   board.innerHTML = "";
 
-  horses.forEach(horse => {
+  horses.forEach((horse,index)=>{
 
     board.innerHTML += `
 
@@ -628,26 +927,25 @@ function renderHorses(){
 }
 
 
-/* ========================================
+/* ==========================================
    勝率ランキング
-   ※勝率は固定
-======================================== */
+========================================== */
 
-function renderRanking(){
+function renderWinRanking(){
 
   const ranking =
     document.getElementById("ranking");
 
   ranking.innerHTML = "";
 
-  horses.forEach((horse,index) => {
+  winRanking.forEach((horse,index)=>{
 
     ranking.innerHTML += `
 
       <div class="rank-row">
 
         <div class="rank-position">
-          ${index + 1}
+          ${index+1}
         </div>
 
         <div class="rank-name">
@@ -659,10 +957,12 @@ function renderRanking(){
         </div>
 
         <div class="rank-bar">
+
           <div
             class="rank-bar-inner"
             style="width:${horse.win}%"
           ></div>
+
         </div>
 
       </div>
@@ -674,35 +974,42 @@ function renderRanking(){
 }
 
 
-/* ========================================
-   投票ボタン
-======================================== */
+/* ==========================================
+   投票ページ
+========================================== */
 
-function renderVoteButtons(){
+function renderVotePage(){
 
-  const grid =
-    document.getElementById("voteGrid");
+  const box =
+    document.getElementById("voteBox");
 
-  grid.innerHTML = "";
+  box.innerHTML = "";
 
-  horses.forEach(horse => {
+  /*
+    投票ページも出走順と同じ
+    3 → 1 → 5 → 2 → 4
+  */
 
-    const count =
-      votes[horse.id] || 0;
+  horses.forEach(horse=>{
 
-    grid.innerHTML += `
+    box.innerHTML += `
 
       <div class="vote-card">
 
-        <div class="vote-name">
-          ${horse.id}番 ${horse.name}
+        <div class="vote-number n${horse.id}">
+          ${horse.id}
         </div>
 
-        <div
-          class="vote-count"
-          id="vote-${horse.id}"
-        >
-          投票 ${count}票
+        <div>
+
+          <div class="vote-name">
+            ${horse.name}
+          </div>
+
+          <div class="vote-sub">
+            ENTRY No.${horse.id}
+          </div>
+
         </div>
 
         <button
@@ -710,7 +1017,7 @@ function renderVoteButtons(){
           id="button-${horse.id}"
           onclick="vote('${horse.id}')"
         >
-          このエントリーを予想
+          投票する
         </button>
 
       </div>
@@ -724,39 +1031,18 @@ function renderVoteButtons(){
 }
 
 
-/* ========================================
-   投票数更新
-======================================== */
-
-function updateVoteCounts(){
-
-  horses.forEach(horse => {
-
-    const el =
-      document.getElementById(`vote-${horse.id}`);
-
-    if(el){
-
-      el.textContent =
-        `投票 ${votes[horse.id] || 0}票`;
-
-    }
-
-  });
-
-}
-
-
-/* ========================================
+/* ==========================================
    ボタン状態
-======================================== */
+========================================== */
 
 function updateButtons(){
 
-  horses.forEach(horse => {
+  horses.forEach(horse=>{
 
     const button =
-      document.getElementById(`button-${horse.id}`);
+      document.getElementById(
+        "button-"+horse.id
+      );
 
     if(!button) return;
 
@@ -781,7 +1067,7 @@ function updateButtons(){
       button.disabled = false;
 
       button.textContent =
-        "このエントリーを予想";
+        "投票する";
 
     }
 
@@ -790,9 +1076,9 @@ function updateButtons(){
 }
 
 
-/* ========================================
+/* ==========================================
    投票
-======================================== */
+========================================== */
 
 async function vote(horseId){
 
@@ -816,14 +1102,14 @@ async function vote(horseId){
 
   try{
 
-    const voteRef =
+    const ref =
       db
       .collection("races")
       .doc("festival2026")
       .collection("votes_v2")
       .doc(currentUser.uid);
 
-    await voteRef.set({
+    await ref.set({
 
       horseId:horseId,
 
@@ -832,19 +1118,21 @@ async function vote(horseId){
 
     });
 
-    myVote = horseId;
+    myVote =
+      horseId;
 
     updateButtons();
 
     const horse =
-      horses.find(h => h.id === horseId);
+      horses.find(h=>h.id===horseId);
 
-    const myVoteEl =
+    const box =
       document.getElementById("myVote");
 
-    myVoteEl.style.display = "block";
+    box.style.display =
+      "block";
 
-    myVoteEl.textContent =
+    box.textContent =
       `🎉 ${horse.name} に投票しました！`;
 
   }catch(error){
@@ -860,16 +1148,18 @@ async function vote(horseId){
 }
 
 
-/* ========================================
-   Firebase開始
-======================================== */
+/* ==========================================
+   Firebase認証
+========================================== */
 
 async function startFirebase(){
 
-  try{
+  const status =
+    document.getElementById(
+      "firebaseStatus"
+    );
 
-    const status =
-      document.getElementById("firebaseStatus");
+  try{
 
     status.textContent =
       "🔄 Firebase認証中...";
@@ -904,16 +1194,9 @@ async function startFirebase(){
 
     startVoteListener();
 
-
   }catch(error){
 
-    console.error(
-      "Firebase Auth Error:",
-      error
-    );
-
-    const status =
-      document.getElementById("firebaseStatus");
+    console.error(error);
 
     status.textContent =
       "🔴 Firebase接続エラー";
@@ -921,9 +1204,8 @@ async function startFirebase(){
     status.style.color =
       "#ff7777";
 
-
     showError(
-      "Firebaseに接続できませんでした。Authenticationの匿名ログインとGitHub PagesのAuthorized domainsを確認してください。"
+      "Firebaseに接続できませんでした。Authenticationの匿名ログインとAuthorized domainsを確認してください。"
     );
 
   }
@@ -931,9 +1213,9 @@ async function startFirebase(){
 }
 
 
-/* ========================================
-   リアルタイム投票監視
-======================================== */
+/* ==========================================
+   投票データ監視
+========================================== */
 
 function startVoteListener(){
 
@@ -943,11 +1225,11 @@ function startVoteListener(){
   .collection("votes_v2")
   .onSnapshot(
 
-    snapshot => {
+    snapshot=>{
 
       votes = {};
 
-      snapshot.forEach(doc => {
+      snapshot.forEach(doc=>{
 
         const data =
           doc.data();
@@ -962,26 +1244,24 @@ function startVoteListener(){
       });
 
 
-      updateVoteCounts();
+      renderResults();
 
     },
 
-    error => {
+    error=>{
 
-      console.error(
-        "Firestore Error:",
-        error
-      );
+      console.error(error);
 
       const status =
-        document.getElementById("firebaseStatus");
+        document.getElementById(
+          "firebaseStatus"
+        );
 
       status.textContent =
         "🔴 Firestoreエラー";
 
       status.style.color =
         "#ff7777";
-
 
       showError(
         "Firestoreの読み込みに失敗しました。Firestore RulesをPublishしてください。"
@@ -992,7 +1272,9 @@ function startVoteListener(){
   );
 
 
-  /* 自分の投票確認 */
+  /*
+    自分が投票済みか確認
+  */
 
   db
   .collection("races")
@@ -1001,7 +1283,7 @@ function startVoteListener(){
   .doc(currentUser.uid)
   .get()
 
-  .then(doc => {
+  .then(doc=>{
 
     if(doc.exists){
 
@@ -1013,18 +1295,20 @@ function startVoteListener(){
 
       const horse =
         horses.find(
-          h => h.id === myVote
+          h=>h.id===myVote
         );
 
       if(horse){
 
-        const myVoteEl =
-          document.getElementById("myVote");
+        const box =
+          document.getElementById(
+            "myVote"
+          );
 
-        myVoteEl.style.display =
+        box.style.display =
           "block";
 
-        myVoteEl.textContent =
+        box.textContent =
           `✓ ${horse.name} に投票済みです`;
 
       }
@@ -1035,26 +1319,112 @@ function startVoteListener(){
 
   })
 
-  .catch(error => {
+  .catch(error=>{
 
-    console.error(
-      "Vote check error:",
-      error
-    );
+    console.error(error);
 
   });
 
 }
 
 
-/* ========================================
+/* ==========================================
+   投票結果
+========================================== */
+
+function renderResults(){
+
+  const results =
+    document.getElementById(
+      "results"
+    );
+
+  const totalVotes =
+    Object.values(votes)
+      .reduce(
+        (sum,value)=>sum+value,
+        0
+      );
+
+
+  document.getElementById(
+    "totalVotes"
+  ).textContent =
+    totalVotes;
+
+
+  /*
+    投票数の多い順
+  */
+
+  const sorted =
+    [...horses].sort(
+      (a,b)=>
+        (votes[b.id]||0) -
+        (votes[a.id]||0)
+    );
+
+
+  results.innerHTML = "";
+
+
+  sorted.forEach((horse,index)=>{
+
+    const count =
+      votes[horse.id] || 0;
+
+    const percent =
+      totalVotes === 0
+      ? 0
+      : Math.round(
+          count / totalVotes * 100
+        );
+
+
+    results.innerHTML += `
+
+      <div class="result-row">
+
+        <div class="result-rank">
+          ${index+1}
+        </div>
+
+        <div class="result-name">
+          ${horse.name}
+        </div>
+
+        <div class="result-votes">
+          ${count}票
+        </div>
+
+        <div class="result-bar">
+
+          <div
+            class="result-bar-inner"
+            style="width:${percent}%"
+          ></div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* ==========================================
    エラー
-======================================== */
+========================================== */
 
 function showError(message){
 
   const box =
-    document.getElementById("errorBox");
+    document.getElementById(
+      "errorBox"
+    );
 
   box.style.display =
     "block";
@@ -1065,13 +1435,18 @@ function showError(message){
 }
 
 
-/* ========================================
+/* ==========================================
    起動
-======================================== */
+========================================== */
 
 renderHorses();
-renderRanking();
-renderVoteButtons();
+
+renderWinRanking();
+
+renderVotePage();
+
+renderResults();
+
 startFirebase();
 
 </script>
