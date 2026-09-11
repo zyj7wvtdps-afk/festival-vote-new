@@ -198,10 +198,8 @@ nav{
 }
 .lane:last-child{border-bottom:0}
 
-/*
-  ★ 馬の向きだけ修正
-  馬の位置・速度・タイミング・走る方向は変更なし
-*/
+/* 馬 */
+
 .horse-run{
   position:absolute;
   left:-90px;
@@ -217,7 +215,7 @@ nav{
   will-change:left;
 }
 
-/* 馬そのものだけを左右反転 */
+/* 馬だけ右向きに反転 */
 .horse-run span{
   display:inline-block;
   transform:scaleX(-1);
@@ -449,8 +447,6 @@ nav{
   <button class="navbtn" onclick="showPage('ranking',this)">🏆 ランキング</button>
 </nav>
 
-<!-- RACE -->
-
 <section id="race" class="page active">
 
   <div class="card">
@@ -549,8 +545,6 @@ nav{
 
 </section>
 
-<!-- VOTE -->
-
 <section id="vote" class="page">
 
   <div class="card">
@@ -582,8 +576,6 @@ nav{
   </div>
 
 </section>
-
-<!-- RANKING -->
 
 <section id="ranking" class="page">
 
@@ -626,42 +618,12 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 const horses = [
-  {
-    id:"1",
-    name:"オレンジスター",
-    winrate:"19%",
-    cls:"n1"
-  },
-  {
-    id:"2",
-    name:"ロイヤルポニー",
-    winrate:"32%",
-    cls:"n2"
-  },
-  {
-    id:"3",
-    name:"グリーンフラッシュ",
-    winrate:"14%",
-    cls:"n3"
-  },
-  {
-    id:"4",
-    name:"ビッくらサンダー",
-    winrate:"25%",
-    cls:"n4"
-  },
-  {
-    id:"5",
-    name:"アサクサダッシュ",
-    winrate:"10%",
-    cls:"n5"
-  },
-  {
-    id:"6",
-    name:"ゴールドフェニックス",
-    winrate:"8%",
-    cls:"n6"
-  }
+  {id:"1",name:"オレンジスター",winrate:"19%",cls:"n1"},
+  {id:"2",name:"ロイヤルポニー",winrate:"32%",cls:"n2"},
+  {id:"3",name:"グリーンフラッシュ",winrate:"14%",cls:"n3"},
+  {id:"4",name:"ビッくらサンダー",winrate:"25%",cls:"n4"},
+  {id:"5",name:"アサクサダッシュ",winrate:"10%",cls:"n5"},
+  {id:"6",name:"ゴールドフェニックス",winrate:"8%",cls:"n6"}
 ];
 
 let currentUser=null;
@@ -750,7 +712,6 @@ function renderVoteList(){
       </div>
 
       <div class="horse-name">
-
         ${h.name}
 
         <span
@@ -974,9 +935,7 @@ async function vote(horseId){
 function listenRanking(){
 
   if(unsubscribeRanking){
-
     unsubscribeRanking();
-
   }
 
   const status=
@@ -994,9 +953,7 @@ function listenRanking(){
         const counts={};
 
         horses.forEach(h=>{
-
           counts[h.id]=0;
-
         });
 
         snapshot.forEach(doc=>{
@@ -1007,9 +964,7 @@ function listenRanking(){
             String(data.horseId);
 
           if(counts[id]!==undefined){
-
             counts[id]++;
-
           }
 
         });
@@ -1017,18 +972,13 @@ function listenRanking(){
         const ranking=
           horses
           .map(h=>({
-
             ...h,
-
             count:counts[h.id]
-
           }))
           .sort((a,b)=>{
 
             if(b.count!==a.count){
-
               return b.count-a.count;
-
             }
 
             return Number(a.id)-Number(b.id);
